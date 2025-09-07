@@ -1,0 +1,10 @@
+Translation Benchmark Results for eng-yor
+Generated on: 2025-09-07 18:40:26
+
+Model Performance:
+nllb_200_3_3B: 81.81%
+nllb_200_1_3B: 79.26%
+nllb_200_600: 76.32%
+
+Best Model: nllb_200_3_3B (81.81%)
+Average Score: 79.13%

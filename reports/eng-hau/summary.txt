@@ -1,0 +1,10 @@
+Translation Benchmark Results for eng-hau
+Generated on: 2025-09-07 18:40:25
+
+Model Performance:
+nllb_200_3_3B: 86.92%
+nllb_200_1_3B: 84.85%
+nllb_200_600: 83.53%
+
+Best Model: nllb_200_3_3B (86.92%)
+Average Score: 85.10%

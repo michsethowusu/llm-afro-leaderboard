@@ -4,13 +4,9 @@ import importlib.util
 from pathlib import Path
 import re
 import sys
-from google.colab import drive
-
-# Mount Google Drive if you want to save results persistently
-drive.mount('/content/drive')
 
 # Add utils to path
-sys.path.append('/content/africa-mt-benchmark/utils')
+sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 from reporting import generate_report
 
 def load_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):
@@ -53,12 +49,9 @@ def process_csv(input_path, recipe_module):
         return df
 
 def main():
-    # Create input directory if it doesn't exist
-    input_dir = "/content/africa-mt-benchmark/input"
-    os.makedirs(input_dir, exist_ok=True)
-    
     recipes = load_recipes()
     
+    input_dir = "/content/africa-mt-benchmark/input"
     for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith(".csv"):
@@ -75,10 +68,7 @@ def main():
                         print(f"Error applying {recipe_name} to {file}: {str(e)}")
     
     # Generate reports after all translations are completed
-    generate_report(input_dir, "/content/africa-mt-benchmark/reports")
-    
-    # Copy results to Google Drive for persistence
-    !cp -r /content/africa-mt-benchmark/reports /content/drive/MyDrive/africa-mt-benchmark-results/
+    generate_report(input_dir)
 
 if __name__ == "__main__":
     main()

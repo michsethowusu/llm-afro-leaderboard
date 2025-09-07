@@ -11,7 +11,7 @@ from datetime import datetime
 plt.style.use('default')
 sns.set_palette("husl")
 
-def collect_results(input_dir="/content/africa-mt-benchmark/input"):
+def collect_results(input_dir="input"):
     """Collect all results from processed CSV files"""
     results = {}
     
@@ -27,16 +27,17 @@ def collect_results(input_dir="/content/africa-mt-benchmark/input"):
                     
                     # Check if the file has been processed (has similarity_score column)
                     if 'similarity_score' in df.columns:
-                        # For Colab, we'll use the folder name to identify the recipe
-                        # You might need to adjust this based on your specific implementation
-                        recipe_name = "nllb_200_600"  # Default, adjust as needed
+                        # Extract model name from columns (look for recipe-specific columns)
+                        model_columns = [col for col in df.columns if col not in ['id', 'text']]
                         
-                        avg_score = df['similarity_score'].mean()
-                        results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100  # Convert to percentage
+                        # For now, we'll assume one model per file, but we might need to handle multiple
+                        if 'similarity_score' in df.columns:
+                            avg_score = df['similarity_score'].mean()
+                            results.setdefault(f"{source_lang}-{target_lang}", {})['nllb_200_600'] = avg_score * 100  # Convert to percentage
                     
     return results
 
-def generate_visualizations(results, output_dir="/content/africa-mt-benchmark/reports"):
+def generate_visualizations(results, output_dir="reports"):
     """Generate visualizations from the results"""
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
@@ -112,7 +113,7 @@ def generate_visualizations(results, output_dir="/content/africa-mt-benchmark/re
     
     return df, summary
 
-def generate_report(input_dir="/content/africa-mt-benchmark/input", output_dir="/content/africa-mt-benchmark/reports"):
+def generate_report(input_dir="input", output_dir="reports"):
     """Main function to generate reports"""
     print("Generating performance reports...")
     

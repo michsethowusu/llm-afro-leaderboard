@@ -6,22 +6,17 @@ import sys
 import os
 
 # Add utils to path
-sys.path.append('/content/africa-mt-benchmark/utils')
-from language_mapping import get_nllb_code
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.language_mapping import get_nllb_code
 
 # Initialize models
 device = "cuda" if torch.cuda.is_available() else "cpu"
-print(f"Using device: {device}")
-
 translation_model_name = "facebook/nllb-200-distilled-600M"
 similarity_model_name = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Load models
-print("Loading translation model...")
 translation_tokenizer = AutoTokenizer.from_pretrained(translation_model_name)
 translation_model = AutoModelForSeq2SeqLM.from_pretrained(translation_model_name).to(device)
-
-print("Loading similarity model...")
 similarity_model = SentenceTransformer(similarity_model_name)
 
 def translate_text(text, source_lang="eng", target_lang="twi"):
@@ -35,13 +30,12 @@ def translate_text(text, source_lang="eng", target_lang="twi"):
         translation_tokenizer.src_lang = nllb_source
         
         # Encode the text
-        inputs = translation_tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+        inputs = translation_tokenizer(text, return_tensors="pt", truncation=True, padding=True).to(device)
         
         # Generate translation
         generated_tokens = translation_model.generate(
             **inputs,
-            forced_bos_token_id=translation_tokenizer.convert_tokens_to_ids(nllb_target),
-            max_length=512
+            forced_bos_token_id=translation_tokenizer.convert_tokens_to_ids(nllb_target)
         )
         
         # Decode the translation

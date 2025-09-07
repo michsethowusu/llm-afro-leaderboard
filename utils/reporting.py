@@ -12,9 +12,36 @@ import re
 plt.style.use('default')
 sns.set_palette("husl")
 
+def get_available_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):
+    """Dynamically discover all available recipes"""
+    recipes = []
+    for file in os.listdir(recipes_dir):
+        if file.endswith(".py") and file != "__init__.py":
+            recipe_name = file[:-3]  # Remove .py extension
+            recipes.append(recipe_name)
+    return recipes
+
+def extract_recipe_name_from_filename(filename, available_recipes):
+    """Extract recipe name from filename by matching against available recipes"""
+    # Remove file extension
+    name_without_ext = os.path.splitext(filename)[0]
+    
+    # Try to find which recipe name is in the filename
+    for recipe in available_recipes:
+        if f"_{recipe}" in name_without_ext:
+            return recipe
+    
+    # If no match found, try to extract using pattern
+    match = re.search(r'_([^_]+)$', name_without_ext)
+    if match:
+        return match.group(1)
+    
+    return "unknown_recipe"
+
 def collect_results(input_dir="/content/africa-mt-benchmark/output"):
     """Collect all results from processed CSV files in the output directory"""
     results = {}
+    available_recipes = get_available_recipes()
     
     for root, dirs, files in os.walk(input_dir):
         for file in files:
@@ -23,101 +50,155 @@ def collect_results(input_dir="/content/africa-mt-benchmark/output"):
                 if '-' in folder_name:  # Only process folders with language pairs
                     source_lang, target_lang = folder_name.split('-', 1)
                     
-                    # Extract recipe name from filename (pattern: filename_recipe.csv)
-                    match = re.search(r'_([^_]+)\.csv$', file)
-                    if match:
-                        recipe_name = match.group(1)
-                        
-                        # Read the CSV file
+                    # Extract recipe name from filename
+                    recipe_name = extract_recipe_name_from_filename(file, available_recipes)
+                    
+                    # Read the CSV file
+                    try:
                         df = pd.read_csv(os.path.join(root, file))
                         
                         # Check if the file has been processed (has similarity_score column)
                         if 'similarity_score' in df.columns:
                             avg_score = df['similarity_score'].mean()
                             results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100  # Convert to percentage
+                    except Exception as e:
+                        print(f"Error reading {file}: {str(e)}")
+                        continue
                     
     return results
 
-# The rest of the reporting functions remain the same...
-def generate_visualizations(results, output_dir="/content/africa-mt-benchmark/reports"):
-    """Generate visualizations from the results"""
-    # Create output directory if it doesn't exist
-    os.makedirs(output_dir, exist_ok=True)
-    
-    # Prepare data for visualization
-    languages = list(results.keys())
-    models = set()
-    for lang in languages:
-        models.update(results[lang].keys())
-    models = list(models)
-    
-    # Create data for bar chart
-    data = []
-    for lang in languages:
-        for model in models:
-            if model in results[lang]:
-                data.append({
-                    'Language Pair': lang,
-                    'Model': model,
-                    'Similarity Score (%)': results[lang][model]
-                })
-    
-    df = pd.DataFrame(data)
-    
-    # Generate bar chart
-    plt.figure(figsize=(12, 8))
-    sns.barplot(x='Language Pair', y='Similarity Score (%)', hue='Model', data=df)
-    plt.title('Translation Quality by Language Pair and Model')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.savefig(os.path.join(output_dir, 'performance_comparison.png'), dpi=300)
-    plt.close()
-    
-    # Generate detailed report CSV
-    report_data = []
-    for lang in languages:
-        row = {'Language Pair': lang}
-        for model in models:
-            if model in results[lang]:
-                row[model] = f"{results[lang][model]:.2f}%"
-            else:
-                row[model] = "N/A"
-        report_data.append(row)
-    
-    report_df = pd.DataFrame(report_data)
-    report_df.to_csv(os.path.join(output_dir, 'detailed_report.csv'), index=False)
-    
-    # Generate summary statistics
-    summary = {
-        'timestamp': datetime.now().isoformat(),
-        'total_language_pairs': len(languages),
-        'total_models': len(models),
-        'overall_average': df['Similarity Score (%)'].mean(),
-        'by_language': {lang: np.mean([results[lang].get(model, 0) for model in models]) for lang in languages},
-        'by_model': {model: np.mean([results[lang].get(model, 0) for lang in languages]) for model in models}
-    }
-    
-    # Save summary as JSON
-    with open(os.path.join(output_dir, 'summary_report.json'), 'w') as f:
-        json.dump(summary, f, indent=2)
-    
-    # Generate model comparison chart
-    if len(models) > 1:
-        model_avgs = [summary['by_model'][model] for model in models]
+def generate_language_specific_reports(results, output_dir="/content/africa-mt-benchmark/reports"):
+    """Generate individual reports for each language pair"""
+    for language_pair, model_results in results.items():
+        # Create language-specific directory
+        lang_output_dir = os.path.join(output_dir, language_pair)
+        os.makedirs(lang_output_dir, exist_ok=True)
+        
+        # Prepare data for visualization
+        models = list(model_results.keys())
+        scores = list(model_results.values())
+        
+        if not models:
+            print(f"No model results found for {language_pair}")
+            continue
+            
+        # Generate language-specific bar chart
         plt.figure(figsize=(10, 6))
-        sns.barplot(x=models, y=model_avgs)
-        plt.title('Average Performance by Model')
+        bars = plt.bar(models, scores)
+        plt.title(f'Translation Quality for {language_pair}')
         plt.ylabel('Similarity Score (%)')
         plt.xticks(rotation=45)
+        
+        # Add value labels on top of bars
+        for bar, score in zip(bars, scores):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
+                    f'{score:.2f}%', ha='center', va='bottom')
+        
         plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, 'model_comparison.png'), dpi=300)
+        plt.savefig(os.path.join(lang_output_dir, 'performance_comparison.png'), dpi=300)
+        plt.close()
+        
+        # Generate language-specific CSV report
+        report_data = []
+        for model, score in model_results.items():
+            report_data.append({
+                'Model': model,
+                'Similarity Score (%)': f"{score:.2f}%",
+                'Raw Score': score
+            })
+        
+        report_df = pd.DataFrame(report_data)
+        report_df.to_csv(os.path.join(lang_output_dir, 'detailed_report.csv'), index=False)
+        
+        # Generate language-specific summary
+        summary = {
+            'language_pair': language_pair,
+            'timestamp': datetime.now().isoformat(),
+            'models': model_results,
+            'average_score': np.mean(scores) if scores else 0,
+            'best_model': max(model_results, key=model_results.get) if model_results else "none",
+            'best_score': max(scores) if scores else 0
+        }
+        
+        # Save summary as JSON
+        with open(os.path.join(lang_output_dir, 'summary_report.json'), 'w') as f:
+            json.dump(summary, f, indent=2)
+        
+        print(f"Generated report for {language_pair} in {lang_output_dir}/")
+        
+        # Also create a simple text summary
+        with open(os.path.join(lang_output_dir, 'summary.txt'), 'w') as f:
+            f.write(f"Translation Benchmark Results for {language_pair}\n")
+            f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("\nModel Performance:\n")
+            for model, score in sorted(model_results.items(), key=lambda x: x[1], reverse=True):
+                f.write(f"{model}: {score:.2f}%\n")
+            f.write(f"\nBest Model: {summary['best_model']} ({summary['best_score']:.2f}%)\n")
+            f.write(f"Average Score: {summary['average_score']:.2f}%\n")
+
+def generate_overall_summary(results, output_dir="/content/africa-mt-benchmark/reports"):
+    """Generate an overall summary across all language pairs"""
+    if not results:
+        return
+        
+    # Prepare data for overall summary
+    all_models = set()
+    for lang_results in results.values():
+        all_models.update(lang_results.keys())
+    
+    # Calculate average performance per model across all languages
+    model_performance = {}
+    for model in all_models:
+        scores = []
+        for lang_results in results.values():
+            if model in lang_results:
+                scores.append(lang_results[model])
+        if scores:
+            model_performance[model] = np.mean(scores)
+    
+    # Create overall summary
+    summary = {
+        'timestamp': datetime.now().isoformat(),
+        'total_language_pairs': len(results),
+        'total_models': len(all_models),
+        'model_performance': model_performance,
+        'best_overall_model': max(model_performance, key=model_performance.get) if model_performance else "none",
+        'best_overall_score': max(model_performance.values()) if model_performance else 0,
+        'language_pairs': list(results.keys())
+    }
+    
+    # Save overall summary
+    with open(os.path.join(output_dir, 'overall_summary.json'), 'w') as f:
+        json.dump(summary, f, indent=2)
+    
+    # Create overall performance chart
+    if model_performance:
+        models = list(model_performance.keys())
+        scores = list(model_performance.values())
+        
+        plt.figure(figsize=(12, 8))
+        bars = plt.bar(models, scores)
+        plt.title('Overall Model Performance Across All Language Pairs')
+        plt.ylabel('Average Similarity Score (%)')
+        plt.xticks(rotation=45)
+        
+        # Add value labels on top of bars
+        for bar, score in zip(bars, scores):
+            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
+                    f'{score:.2f}%', ha='center', va='bottom')
+        
+        plt.tight_layout()
+        plt.savefig(os.path.join(output_dir, 'overall_performance.png'), dpi=300)
         plt.close()
     
-    return df, summary
+    return summary
 
 def generate_report(input_dir="/content/africa-mt-benchmark/output", output_dir="/content/africa-mt-benchmark/reports"):
     """Main function to generate reports"""
     print("Generating performance reports...")
+    
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
     
     # Collect results from all processed files
     results = collect_results(input_dir)
@@ -126,10 +207,15 @@ def generate_report(input_dir="/content/africa-mt-benchmark/output", output_dir=
         print("No processed results found. Please run translations first.")
         return
     
-    # Generate visualizations and reports
-    df, summary = generate_visualizations(results, output_dir)
+    # Generate language-specific reports
+    generate_language_specific_reports(results, output_dir)
+    
+    # Generate overall summary
+    overall_summary = generate_overall_summary(results, output_dir)
     
     print(f"Reports generated successfully in {output_dir}/")
-    print(f"Overall average similarity score: {summary['overall_average']:.2f}%")
     
-    return df, summary
+    if overall_summary:
+        print(f"Overall best model: {overall_summary['best_overall_model']} ({overall_summary['best_overall_score']:.2f}%)")
+    
+    return results, overall_summary

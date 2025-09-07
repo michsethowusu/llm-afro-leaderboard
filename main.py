@@ -4,13 +4,12 @@ import importlib.util
 from pathlib import Path
 import re
 import sys
-import shutil
 
 # Add utils to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '/content/africa-mt-benchmark/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 from reporting import generate_report
 
-def load_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):
+def load_recipes(recipes_dir="recipes"):
     recipes = {}
     for file in os.listdir(recipes_dir):
         if file.endswith(".py") and file != "__init__.py":
@@ -56,8 +55,8 @@ def get_output_filename(input_filename, recipe_name):
 
 def main():
     # Define input and output directories
-    input_dir = "/content/africa-mt-benchmark/input"
-    output_dir = "/content/africa-mt-benchmark/output"
+    input_dir = "input"
+    output_dir = "output"
     
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)

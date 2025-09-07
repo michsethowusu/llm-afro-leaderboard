@@ -1,0 +1,10 @@
+Translation Benchmark Results for eng-twi
+Generated on: 2025-09-07 17:07:01
+
+Model Performance:
+nllb_200_3_3B: 78.93%
+nllb_200_1_3B: 77.18%
+nllb_200_600: 74.68%
+
+Best Model: nllb_200_3_3B (78.93%)
+Average Score: 76.93%

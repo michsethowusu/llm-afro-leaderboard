@@ -1,5 +1,3 @@
-  Contributing to Africa MT Benchmark body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; } h1, h2, h3 { color: #2c3e50; } code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; } pre { background-color: #f8f8f8; padding: 15px; border-radius: 5px; overflow-x: auto; } .step { background-color: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px 15px; margin: 15px 0; } .note { background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 10px 15px; margin: 15px 0; }
-
 Contributing to Africa MT Benchmark
 ===================================
 

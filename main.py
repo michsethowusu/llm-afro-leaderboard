@@ -49,6 +49,22 @@ def process_csv(input_path, output_path, recipe_module):
         print(f"Could not extract language codes from path: {input_path}")
         return df
 
+def is_already_processed(input_path, output_dir, recipes):
+    """Check if all recipes have already processed this input file"""
+    # Get the relative path from input directory
+    relative_path = os.path.relpath(os.path.dirname(input_path), "/content/africa-mt-benchmark/input")
+    input_filename = os.path.basename(input_path)
+    
+    # Check if output exists for all recipes
+    for recipe_name in recipes.keys():
+        output_subdir = os.path.join(output_dir, recipe_name, relative_path)
+        output_path = os.path.join(output_subdir, input_filename)
+        
+        if not os.path.exists(output_path):
+            return False
+    
+    return True
+
 def main():
     # Define input and output directories
     input_dir = "/content/africa-mt-benchmark/input"
@@ -64,17 +80,28 @@ def main():
             if file.endswith(".csv"):
                 input_path = os.path.join(root, file)
                 
-                # Create corresponding output path
-                relative_path = os.path.relpath(root, input_dir)
-                output_subdir = os.path.join(output_dir, relative_path)
-                os.makedirs(output_subdir, exist_ok=True)
-                output_path = os.path.join(output_subdir, file)
+                # Check if this file has already been processed by all recipes
+                if is_already_processed(input_path, output_dir, recipes):
+                    print(f"Skipping {input_path} - already processed by all recipes")
+                    continue
                 
-                print(f"Processing {input_path}")
-                print(f"Output will be saved to {output_path}")
+                # Get the relative path from input directory
+                relative_path = os.path.relpath(root, input_dir)
                 
                 for recipe_name, recipe_module in recipes.items():
-                    print(f"Applying recipe: {recipe_name}")
+                    # Create recipe-specific output directory
+                    recipe_output_dir = os.path.join(output_dir, recipe_name, relative_path)
+                    os.makedirs(recipe_output_dir, exist_ok=True)
+                    output_path = os.path.join(recipe_output_dir, file)
+                    
+                    # Check if this recipe has already processed this file
+                    if os.path.exists(output_path):
+                        print(f"Skipping {recipe_name} for {file} - already processed")
+                        continue
+                    
+                    print(f"Processing {input_path} with recipe {recipe_name}")
+                    print(f"Output will be saved to {output_path}")
+                    
                     try:
                         result_df = process_csv(input_path, output_path, recipe_module)
                         result_df.to_csv(output_path, index=False)

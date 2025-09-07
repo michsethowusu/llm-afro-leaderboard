@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 from reporting import generate_report
 
-def load_recipes(recipes_dir="recipes"):
+def load_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):
     recipes = {}
     for file in os.listdir(recipes_dir):
         if file.endswith(".py") and file != "__init__.py":
@@ -51,7 +51,7 @@ def process_csv(input_path, recipe_module):
 def main():
     recipes = load_recipes()
     
-    input_dir = "input"
+    input_dir = "/content/africa-mt-benchmark/input"
     for root, dirs, files in os.walk(input_dir):
         for file in files:
             if file.endswith(".csv"):

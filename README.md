@@ -1,5 +1,3 @@
-  Africa MT Benchmark body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; color: #333; } h1, h2, h3 { color: #2c3e50; } code { background-color: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; } pre { background-color: #f8f8f8; padding: 15px; border-radius: 5px; overflow-x: auto; } .badge { display: inline-block; padding: 3px 7px; border-radius: 3px; background-color: #3498db; color: white; margin-right: 5px; font-size: 14px; } .note { background-color: #fff8e1; border-left: 4px solid #ffc107; padding: 10px 15px; margin: 15px 0; } .evaluation-process { background-color: #e8f5e9; border-left: 4px solid #4caf50; padding: 10px 15px; margin: 15px 0; } .process-step { margin: 10px 0; padding: 10px; background-color: #f9f9f9; border-radius: 5px; } .metric { background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 10px 15px; margin: 15px 0; }
-
 Africa MT Benchmark
 ===================
 
@@ -153,5 +151,5 @@ If you use this benchmark in your research, please cite:
       title = {Africa MT Benchmark: A Framework for Evaluating Machine Translation Models on African Languages},
       author = {Your Name},
       year = {2023},
-      url = {https://github.com/your-username/africa-mt-benchmark}
+      url = {https://github.com/michsethowusu/africa-mt-benchmark}
     }

@@ -6,6 +6,7 @@ from pathlib import Path
 import json
 import numpy as np
 from datetime import datetime
+import re
 
 # Set style for plots
 plt.style.use('default')
@@ -22,20 +23,22 @@ def collect_results(input_dir="/content/africa-mt-benchmark/output"):
                 if '-' in folder_name:  # Only process folders with language pairs
                     source_lang, target_lang = folder_name.split('-', 1)
                     
-                    # Read the CSV file
-                    df = pd.read_csv(os.path.join(root, file))
-                    
-                    # Check if the file has been processed (has similarity_score column)
-                    if 'similarity_score' in df.columns:
-                        # For Colab, we'll use the folder name to identify the recipe
-                        # You might need to adjust this based on your specific implementation
-                        recipe_name = "nllb_200_600"  # Default, adjust as needed
+                    # Extract recipe name from filename (pattern: filename_recipe.csv)
+                    match = re.search(r'_([^_]+)\.csv$', file)
+                    if match:
+                        recipe_name = match.group(1)
                         
-                        avg_score = df['similarity_score'].mean()
-                        results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100  # Convert to percentage
+                        # Read the CSV file
+                        df = pd.read_csv(os.path.join(root, file))
+                        
+                        # Check if the file has been processed (has similarity_score column)
+                        if 'similarity_score' in df.columns:
+                            avg_score = df['similarity_score'].mean()
+                            results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100  # Convert to percentage
                     
     return results
 
+# The rest of the reporting functions remain the same...
 def generate_visualizations(results, output_dir="/content/africa-mt-benchmark/reports"):
     """Generate visualizations from the results"""
     # Create output directory if it doesn't exist

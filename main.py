@@ -22,9 +22,11 @@ def load_recipes(recipes_dir="recipes"):
             recipes[module_name] = module
     return recipes
 
-def load_language_pairs(file_path="language_pairs.txt"):
-    """Load language pairs from a text file"""
+def load_language_pairs(input_dir="input"):
+    """Load language pairs from language_pairs.txt in the input directory"""
     language_pairs = []
+    file_path = os.path.join(input_dir, "language_pairs.txt")
+    
     try:
         with open(file_path, 'r') as f:
             for line in f:
@@ -61,10 +63,10 @@ def main():
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
-    # Load language pairs from file
-    language_pairs = load_language_pairs()
+    # Load language pairs from file in input directory
+    language_pairs = load_language_pairs(input_dir)
     if not language_pairs:
-        print("No language pairs found. Please create a language_pairs.txt file.")
+        print("No language pairs found. Please create a language_pairs.txt file in the input directory.")
         return
     
     # Load recipes
@@ -76,7 +78,7 @@ def main():
         lang_pair_dir = os.path.join(output_dir, f"{source_lang}-{target_lang}")
         os.makedirs(lang_pair_dir, exist_ok=True)
         
-        # Process each CSV file in the input directory
+        # Process each CSV file in the input directory (excluding language_pairs.txt)
         for file in os.listdir(input_dir):
             if file.endswith(".csv"):
                 input_path = os.path.join(input_dir, file)

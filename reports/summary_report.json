@@ -1,12 +1,13 @@
 {
-  "timestamp": "2025-09-07T15:21:46.200568",
+  "timestamp": "2025-09-07T16:14:11.262053",
   "total_language_pairs": 1,
-  "total_models": 1,
-  "overall_average": 74.67559077824005,
+  "total_models": 2,
+  "overall_average": 75.92551509539285,
   "by_language": {
-    "eng-twi": 74.67559077824005
+    "eng-twi": 75.92551509539285
   },
   "by_model": {
+    "3B": 77.17543941254567,
     "600": 74.67559077824005
   }
 }

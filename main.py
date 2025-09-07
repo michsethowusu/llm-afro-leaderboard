@@ -6,7 +6,7 @@ import re
 import sys
 
 # Add utils to path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/content/africa-mt-benchmark/utils'))
 from reporting import generate_report
 
 def load_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):

@@ -16,13 +16,19 @@ print(f"Using device: {device}")
 translation_model_name = "facebook/nllb-200-1.3B"
 similarity_model_name = "sentence-transformers/all-MiniLM-L6-v2"
 
-# Load models
-print("Loading translation model...")
-translation_tokenizer = AutoTokenizer.from_pretrained(translation_model_name)
-translation_model = AutoModelForSeq2SeqLM.from_pretrained(translation_model_name).to(device)
+# Load models (only once)
+def load_models():
+    print("Loading translation model...")
+    translation_tokenizer = AutoTokenizer.from_pretrained(translation_model_name)
+    translation_model = AutoModelForSeq2SeqLM.from_pretrained(translation_model_name).to(device)
 
-print("Loading similarity model...")
-similarity_model = SentenceTransformer(similarity_model_name)
+    print("Loading similarity model...")
+    similarity_model = SentenceTransformer(similarity_model_name)
+    
+    return translation_tokenizer, translation_model, similarity_model
+
+# Load models at module level
+translation_tokenizer, translation_model, similarity_model = load_models()
 
 def translate_text(text, source_lang="eng", target_lang="twi"):
     """Translate text using NLLB-200-1.3B model"""

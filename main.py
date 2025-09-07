@@ -22,31 +22,31 @@ def load_recipes(recipes_dir="recipes"):
             recipes[module_name] = module
     return recipes
 
-def extract_lang_codes_from_path(path):
-    """Extract language codes from folder path like 'eng-twi'"""
-    # Get the parent folder name
-    folder_name = os.path.basename(os.path.dirname(path))
-    
-    # Match patterns like 'eng-twi' or 'fra-yor'
-    match = re.match(r'^([a-z]{2,3})-([a-z]{2,3})$', folder_name)
-    if match:
-        source_code, target_code = match.groups()
-        return source_code, target_code
-    return None, None
+def load_language_pairs(file_path="language_pairs.txt"):
+    """Load language pairs from a text file"""
+    language_pairs = []
+    try:
+        with open(file_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                # Skip empty lines and comments
+                if line and not line.startswith('#'):
+                    if '-' in line:
+                        source, target = line.split('-', 1)
+                        language_pairs.append((source.strip(), target.strip()))
+                    else:
+                        print(f"Invalid language pair format: {line}")
+        return language_pairs
+    except FileNotFoundError:
+        print(f"Language pairs file not found: {file_path}")
+        return []
 
-def process_csv(input_path, output_path, recipe_module):
+def process_csv(input_path, output_path, recipe_module, source_lang, target_lang):
     df = pd.read_csv(input_path)
     
-    # Extract language codes from folder path
-    source_code, target_code = extract_lang_codes_from_path(input_path)
-    
-    if source_code and target_code:
-        # Process with the detected language codes
-        processed_df = recipe_module.process_dataframe(df, source_lang=source_code, target_lang=target_code)
-        return processed_df
-    else:
-        print(f"Could not extract language codes from path: {input_path}")
-        return df
+    # Process with the specified language codes
+    processed_df = recipe_module.process_dataframe(df, source_lang=source_lang, target_lang=target_lang)
+    return processed_df
 
 def get_output_filename(input_filename, recipe_name):
     """Generate output filename with recipe prefix"""
@@ -61,37 +61,45 @@ def main():
     # Create output directory if it doesn't exist
     os.makedirs(output_dir, exist_ok=True)
     
+    # Load language pairs from file
+    language_pairs = load_language_pairs()
+    if not language_pairs:
+        print("No language pairs found. Please create a language_pairs.txt file.")
+        return
+    
+    # Load recipes
     recipes = load_recipes()
     
-    for root, dirs, files in os.walk(input_dir):
-        for file in files:
+    # Process each language pair
+    for source_lang, target_lang in language_pairs:
+        # Create language pair directory in output
+        lang_pair_dir = os.path.join(output_dir, f"{source_lang}-{target_lang}")
+        os.makedirs(lang_pair_dir, exist_ok=True)
+        
+        # Process each CSV file in the input directory
+        for file in os.listdir(input_dir):
             if file.endswith(".csv"):
-                input_path = os.path.join(root, file)
-                
-                # Get the relative path from input directory
-                relative_path = os.path.relpath(root, input_dir)
-                output_subdir = os.path.join(output_dir, relative_path)
-                os.makedirs(output_subdir, exist_ok=True)
+                input_path = os.path.join(input_dir, file)
                 
                 for recipe_name, recipe_module in recipes.items():
                     # Generate recipe-specific output filename
                     output_filename = get_output_filename(file, recipe_name)
-                    output_path = os.path.join(output_subdir, output_filename)
+                    output_path = os.path.join(lang_pair_dir, output_filename)
                     
-                    # Check if this recipe has already processed this file
+                    # Check if this recipe has already processed this file for this language pair
                     if os.path.exists(output_path):
-                        print(f"Skipping {recipe_name} for {file} - already processed")
+                        print(f"Skipping {recipe_name} for {file} ({source_lang}-{target_lang}) - already processed")
                         continue
                     
-                    print(f"Processing {input_path} with recipe {recipe_name}")
+                    print(f"Processing {input_path} with recipe {recipe_name} for {source_lang}-{target_lang}")
                     print(f"Output will be saved to {output_path}")
                     
                     try:
-                        result_df = process_csv(input_path, output_path, recipe_module)
+                        result_df = process_csv(input_path, output_path, recipe_module, source_lang, target_lang)
                         result_df.to_csv(output_path, index=False)
-                        print(f"Completed {recipe_name} on {file}")
+                        print(f"Completed {recipe_name} on {file} for {source_lang}-{target_lang}")
                     except Exception as e:
-                        print(f"Error applying {recipe_name} to {file}: {str(e)}")
+                        print(f"Error applying {recipe_name} to {file} for {source_lang}-{target_lang}: {str(e)}")
     
     # Generate reports using the output directory
     generate_report(output_dir)

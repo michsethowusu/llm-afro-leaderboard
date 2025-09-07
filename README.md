@@ -149,7 +149,7 @@ If you use this benchmark in your research, please cite:
 
     @software{africa-mt-benchmark,
       title = {Africa MT Benchmark: A Framework for Evaluating Machine Translation Models on African Languages},
-      author = {Your Name},
+      author = {Mich-Seth Owusu},
       year = {2023},
       url = {https://github.com/michsethowusu/africa-mt-benchmark}
     }

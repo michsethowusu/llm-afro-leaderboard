@@ -24,6 +24,13 @@ LANGUAGE_MAPPING = {
         "nllb_code": "hau_Latn",
         "script": "Latn"
     },
+    "nya": {
+    "iso2": "ny",
+    "iso3": "nya",
+    "name": "Chichewa",
+    "nllb_code": "nya_Latn",
+    "script": "Latn"
+    },
     "ibo": {
         "iso2": "ig",
         "iso3": "ibo",

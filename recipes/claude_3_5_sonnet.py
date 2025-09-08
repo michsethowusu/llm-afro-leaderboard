@@ -4,6 +4,7 @@ from sentence_transformers import SentenceTransformer, util
 import sys
 import os
 import getpass
+import time
 
 # Add utils to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))

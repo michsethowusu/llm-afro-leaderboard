@@ -27,6 +27,9 @@ def translate_text(text, source_lang, target_lang):
             messages=[{"role": "user", "content": prompt}]
         )
         
+        # Rate limiting: wait 1 second after each API call
+        time.sleep(1)
+        
         return message.content[0].text.strip()
     except Exception as e:
         print(f"Error translating text: {text}. Error: {str(e)}")

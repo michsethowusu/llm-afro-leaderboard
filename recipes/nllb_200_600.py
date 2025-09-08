@@ -30,7 +30,7 @@ def load_models():
 # Load models at module level
 translation_tokenizer, translation_model, similarity_model = load_models()
 
-def translate_text(text, source_lang="eng", target_lang="twi"):
+def translate_text(text, source_lang, target_lang):
     """Translate text using NLLB-200-600M model"""
     try:
         # Convert language codes to NLLB format
@@ -65,19 +65,22 @@ def calculate_similarity(original, backtranslated):
         print(f"Error calculating similarity: {str(e)}")
         return 0.0
 
-def process_dataframe(df, source_lang="eng", target_lang="twi"):
+def process_dataframe(df, source_lang, target_lang):
     """Main processing function for the recipe"""
     print(f"Translating from {source_lang} to {target_lang} using NLLB-200-600M")
     
+    # Make a copy to preserve the original DataFrame including the source column
+    result_df = df.copy()
+    
     # Add new columns
-    df['translated'] = df['text'].apply(
+    result_df['translated'] = result_df['text'].apply(
         lambda x: translate_text(x, source_lang, target_lang)
     )
-    df['backtranslated'] = df['translated'].apply(
+    result_df['backtranslated'] = result_df['translated'].apply(
         lambda x: translate_text(x, target_lang, source_lang)
     )
-    df['similarity_score'] = df.apply(
+    result_df['similarity_score'] = result_df.apply(
         lambda row: calculate_similarity(row['text'], row['backtranslated']), axis=1
     )
     
-    return df
+    return result_df

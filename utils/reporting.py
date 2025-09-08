@@ -12,7 +12,7 @@ import re
 plt.style.use('default')
 sns.set_palette("husl")
 
-def get_available_recipes(recipes_dir="/content/africa-mt-benchmark/recipes"):
+def get_available_recipes(recipes_dir="recipes"):
     """Dynamically discover all available recipes"""
     recipes = []
     for file in os.listdir(recipes_dir):
@@ -38,9 +38,10 @@ def extract_recipe_name_from_filename(filename, available_recipes):
     
     return "unknown_recipe"
 
-def collect_results(input_dir="/content/africa-mt-benchmark/output"):
+def collect_results(input_dir="output"):
     """Collect all results from processed CSV files in the output directory"""
     results = {}
+    source_breakdown = {}  # New: to store breakdown by source
     available_recipes = get_available_recipes()
     
     for root, dirs, files in os.walk(input_dir):
@@ -59,16 +60,28 @@ def collect_results(input_dir="/content/africa-mt-benchmark/output"):
                         
                         # Check if the file has been processed (has similarity_score column)
                         if 'similarity_score' in df.columns:
+                            # Calculate overall average
                             avg_score = df['similarity_score'].mean()
-                            results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100  # Convert to percentage
+                            results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100
+                            
+                            # Calculate breakdown by source if source column exists
+                            if 'source' in df.columns:
+                                source_breakdown.setdefault(f"{source_lang}-{target_lang}", {})
+                                source_breakdown[f"{source_lang}-{target_lang}"].setdefault(recipe_name, {})
+                                
+                                # Group by source and calculate average similarity
+                                for source, group in df.groupby('source'):
+                                    source_avg = group['similarity_score'].mean() * 100
+                                    source_breakdown[f"{source_lang}-{target_lang}"][recipe_name][source] = source_avg
+                    
                     except Exception as e:
                         print(f"Error reading {file}: {str(e)}")
                         continue
                     
-    return results
+    return results, source_breakdown
 
-def generate_language_specific_reports(results, output_dir="/content/africa-mt-benchmark/reports"):
-    """Generate individual reports for each language pair"""
+def generate_language_specific_reports(results, source_breakdown, output_dir="reports"):
+    """Generate individual reports for each language pair with source breakdown"""
     for language_pair, model_results in results.items():
         # Create language-specific directory
         lang_output_dir = os.path.join(output_dir, language_pair)
@@ -82,7 +95,7 @@ def generate_language_specific_reports(results, output_dir="/content/africa-mt-b
             print(f"No model results found for {language_pair}")
             continue
             
-        # Generate language-specific bar chart
+        # Generate language-specific bar chart (overall)
         plt.figure(figsize=(10, 6))
         bars = plt.bar(models, scores)
         plt.title(f'Translation Quality for {language_pair}')
@@ -98,6 +111,39 @@ def generate_language_specific_reports(results, output_dir="/content/africa-mt-b
         plt.savefig(os.path.join(lang_output_dir, 'performance_comparison.png'), dpi=300)
         plt.close()
         
+        # Generate stacked bar chart by source if we have source breakdown data
+        if language_pair in source_breakdown and source_breakdown[language_pair]:
+            plt.figure(figsize=(12, 8))
+            
+            # Get all unique sources across all models
+            all_sources = set()
+            for model_data in source_breakdown[language_pair].values():
+                all_sources.update(model_data.keys())
+            all_sources = sorted(list(all_sources))
+            
+            # Prepare data for stacked bar chart
+            bottom = np.zeros(len(models))
+            colors = plt.cm.Set3(np.linspace(0, 1, len(all_sources)))
+            
+            for i, source in enumerate(all_sources):
+                source_scores = []
+                for model in models:
+                    if model in source_breakdown[language_pair] and source in source_breakdown[language_pair][model]:
+                        source_scores.append(source_breakdown[language_pair][model][source])
+                    else:
+                        source_scores.append(0)
+                
+                bars = plt.bar(models, source_scores, bottom=bottom, label=source, color=colors[i])
+                bottom += source_scores
+            
+            plt.title(f'Translation Quality by Source for {language_pair}')
+            plt.ylabel('Similarity Score (%)')
+            plt.xticks(rotation=45)
+            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+            plt.tight_layout()
+            plt.savefig(os.path.join(lang_output_dir, 'source_breakdown.png'), dpi=300, bbox_inches='tight')
+            plt.close()
+        
         # Generate language-specific CSV report
         report_data = []
         for model, score in model_results.items():
@@ -110,6 +156,21 @@ def generate_language_specific_reports(results, output_dir="/content/africa-mt-b
         report_df = pd.DataFrame(report_data)
         report_df.to_csv(os.path.join(lang_output_dir, 'detailed_report.csv'), index=False)
         
+        # Generate source breakdown CSV if available
+        if language_pair in source_breakdown and source_breakdown[language_pair]:
+            source_report_data = []
+            for model, sources in source_breakdown[language_pair].items():
+                for source, score in sources.items():
+                    source_report_data.append({
+                        'Model': model,
+                        'Source': source,
+                        'Similarity Score (%)': f"{score:.2f}%",
+                        'Raw Score': score
+                    })
+            
+            source_report_df = pd.DataFrame(source_report_data)
+            source_report_df.to_csv(os.path.join(lang_output_dir, 'source_breakdown.csv'), index=False)
+        
         # Generate language-specific summary
         summary = {
             'language_pair': language_pair,
@@ -119,6 +180,10 @@ def generate_language_specific_reports(results, output_dir="/content/africa-mt-b
             'best_model': max(model_results, key=model_results.get) if model_results else "none",
             'best_score': max(scores) if scores else 0
         }
+        
+        # Add source breakdown to summary if available
+        if language_pair in source_breakdown and source_breakdown[language_pair]:
+            summary['source_breakdown'] = source_breakdown[language_pair]
         
         # Save summary as JSON
         with open(os.path.join(lang_output_dir, 'summary_report.json'), 'w') as f:
@@ -136,7 +201,7 @@ def generate_language_specific_reports(results, output_dir="/content/africa-mt-b
             f.write(f"\nBest Model: {summary['best_model']} ({summary['best_score']:.2f}%)\n")
             f.write(f"Average Score: {summary['average_score']:.2f}%\n")
 
-def generate_overall_summary(results, output_dir="/content/africa-mt-benchmark/reports"):
+def generate_overall_summary(results, source_breakdown, output_dir="reports"):
     """Generate an overall summary across all language pairs"""
     if not results:
         return
@@ -193,7 +258,7 @@ def generate_overall_summary(results, output_dir="/content/africa-mt-benchmark/r
     
     return summary
 
-def generate_report(input_dir="/content/africa-mt-benchmark/output", output_dir="/content/africa-mt-benchmark/reports"):
+def generate_report(input_dir="output", output_dir="reports"):
     """Main function to generate reports"""
     print("Generating performance reports...")
     
@@ -201,17 +266,17 @@ def generate_report(input_dir="/content/africa-mt-benchmark/output", output_dir=
     os.makedirs(output_dir, exist_ok=True)
     
     # Collect results from all processed files
-    results = collect_results(input_dir)
+    results, source_breakdown = collect_results(input_dir)
     
     if not results:
         print("No processed results found. Please run translations first.")
         return
     
     # Generate language-specific reports
-    generate_language_specific_reports(results, output_dir)
+    generate_language_specific_reports(results, source_breakdown, output_dir)
     
     # Generate overall summary
-    overall_summary = generate_overall_summary(results, output_dir)
+    overall_summary = generate_overall_summary(results, source_breakdown, output_dir)
     
     print(f"Reports generated successfully in {output_dir}/")
     

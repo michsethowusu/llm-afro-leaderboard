@@ -10,7 +10,7 @@ How to Contribute a New Recipe
 
 Start by forking the repository to your own GitHub account.
 
-    git clone https://github.com/your-username/africa-mt-benchmark.git
+    git clone https://github.com/michsethowusu/africa-mt-benchmark.git
     cd africa-mt-benchmark
 
 ### Step 2: Create a New Recipe File

@@ -1,4 +1,4 @@
 # Format: source_lang-target_lang
 eng-twi
 eng-yor
-eng-hau
+eng-nya

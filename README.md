@@ -1,14 +1,14 @@
-Africa MT Benchmark
+Africa LLM MT Benchmark
 ===================
 
-A comprehensive benchmarking framework for evaluating machine translation models on African languages using back-translation and semantic similarity analysis.
+A comprehensive benchmarking framework for evaluating machine translation accuracy of LLMs for African languages using back-translation and semantic similarity analysis.
 
 Machine Translation Benchmarking NLLB Back-translation Semantic Similarity
 
 Overview
 --------
 
-Africa MT Benchmark is a framework designed to evaluate the performance of machine translation models on African languages using a robust back-translation and similarity scoring methodology.
+Africa MT Benchmark is a framework designed to evaluate the machine translation accuracy of LLMs for African languages using a robust back-translation and similarity scoring methodology.
 
 Evaluation Methodology
 ----------------------
@@ -91,12 +91,12 @@ Quick Start
     └── eng-hau/
         └── sentences.csv
 
-Supported Models
+Tested Models
 ----------------
 
-*   NLLB-200 Distilled 600M
-*   NLLB-200 1.3B
-*   NLLB-200 3.3B
+*   DeepSeek
+*   Mistral
+*   
 
 Results Interpretation
 ----------------------
@@ -108,12 +108,6 @@ The benchmark generates comprehensive reports including:
 *   **Summary statistics:** Average, median, and distribution of similarity scores
 *   **Model comparison visualizations:** Direct comparison of different models
 
-**Interpreting Similarity Scores:**  
-• 0.9-1.0: Excellent translation (meaning fully preserved)  
-• 0.7-0.9: Good translation (minor meaning changes)  
-• 0.5-0.7: Acceptable translation (some meaning loss)  
-• 0.3-0.5: Poor translation (significant meaning loss)  
-• 0.0-0.3: Very poor translation (complete meaning change)
 
 Limitations and Considerations
 ------------------------------
@@ -134,22 +128,15 @@ License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-Acknowledgments
----------------
-
-*   Facebook Research for the NLLB models
-*   Hugging Face for the Transformers library
-*   SentenceTransformers for similarity scoring
-*   Google Colab for providing computational resources
 
 Citation
 --------
 
 If you use this benchmark in your research, please cite:
 
-    @software{africa-mt-benchmark,
-      title = {Africa MT Benchmark: A Framework for Evaluating Machine Translation Models on African Languages},
+    @software{africa-llm-mt-benchmark,
+      title = {Africa LLM MT Benchmark: A Framework for Evaluating Machine Translation Accuracy of LLMs for African Languages},
       author = {Mich-Seth Owusu},
       year = {2023},
-      url = {https://github.com/michsethowusu/africa-mt-benchmark}
+      url = {https://github.com/michsethowusu/africa-llm-mt-benchmark}
     }

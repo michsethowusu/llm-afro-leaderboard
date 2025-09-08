@@ -226,6 +226,9 @@ def get_iso2_code(lang_code):
     if info:
         return info["iso2"]
     else:
+        # Fallback: try to use the first two characters if it's a 3-letter code
+        if len(lang_code) == 3:
+            return lang_code[:2]
         return lang_code  # Return as-is if not found
 
 def get_language_name(lang_code):

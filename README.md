@@ -88,7 +88,7 @@ Quick Start
     │   └── sentences.csv
     ├── eng-yor/
     │   └── sentences.csv
-    └── fra-swc/
+    └── eng-hau/
         └── sentences.csv
 
 Supported Models

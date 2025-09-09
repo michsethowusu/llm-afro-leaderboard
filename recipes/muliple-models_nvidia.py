@@ -73,16 +73,17 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
 
     for attempt in range(max_retries):
         try:
-            # Use the OpenAI client with the approach you provided
+            # Call NVIDIA API
             completion = nvidia_client.chat.completions.create(
                 model=model_name,
                 messages=[
                     {
-                        "role": "system", 
-                        "content": f"You are a translation assistant that translates text from {source_lang_name} to {target_lang_name}. Return ONLY the translation inside square brackets."
+                        "role": "system",
+                        "content": f"You are a translation assistant that translates text from {source_lang_name} to {target_lang_name}. "
+                                   f"Return ONLY the translation inside square brackets."
                     },
                     {
-                        "role": "user", 
+                        "role": "user",
                         "content": f"Translate the following {source_lang_name} text into {target_lang_name}:\n\n{text}"
                     }
                 ],
@@ -92,45 +93,35 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                 frequency_penalty=0,
                 presence_penalty=0,
                 stream=False,
-                extra_body={
-                    "thinking_budget": -1
-                }
+                extra_body={"thinking_budget": -1}
             )
-            
-            # Extract the response text
-            if completion and completion.choices and len(completion.choices) > 0:
-                response_text = completion.choices[0].message.content
-                
-                if response_text is None:
-                    print(f"Response content is None on attempt {attempt+1}")
-                    if attempt < max_retries - 1:
-                        time.sleep(2 ** attempt)
-                        continue
-                    else:
-                        return ""
-                
-                response_text = response_text.strip()
-                translation = extract_text_from_brackets(response_text)
-                
-                if not translation:
-                    translation = response_text.strip()
-                    
-                return translation
-            else:
-                print(f"Empty response from API on attempt {attempt+1}")
+
+            # Always read the response directly (like your working snippet)
+            response_text = completion.choices[0].message.content
+
+            if response_text is None:
+                print(f"[{model_name}] Response is None on attempt {attempt+1}")
                 if attempt < max_retries - 1:
                     time.sleep(2 ** attempt)
                     continue
-                else:
-                    return ""
-            
+                return ""
+
+            response_text = response_text.strip()
+
+            # Extract bracketed text if present, else return the raw response
+            translation = extract_text_from_brackets(response_text)
+            if not translation:
+                translation = response_text
+
+            return translation
+
         except Exception as e:
-            print(f"Error on attempt {attempt+1} for text '{text}' with model '{model_name}': {str(e)}")
+            print(f"[{model_name}] Error on attempt {attempt+1} for text '{text[:50]}...': {str(e)}")
             if attempt < max_retries - 1:
                 time.sleep(2 ** attempt)
-            else:
-                return ""
-            
+                continue
+            return ""
+
     return ""
 
 def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:

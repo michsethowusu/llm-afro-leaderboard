@@ -87,8 +87,8 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                         "content": f"Translate the following {source_lang_name} text into {target_lang_name}:\n\n{text}"
                     }
                 ],
-                temperature=0,
-                top_p=1,
+                temperature=0.3,
+                top_p=0.95,
                 max_tokens=2096,
                 frequency_penalty=0,
                 presence_penalty=0,

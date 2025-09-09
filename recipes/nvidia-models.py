@@ -30,6 +30,24 @@ backtranslation_model_name = "facebook/nllb-200-3.3B"
 backtranslation_tokenizer = AutoTokenizer.from_pretrained(backtranslation_model_name)
 backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_model_name).to(device)
 
+def get_model_list():
+    """Read model names from models.txt file in the recipes directory"""
+    models_file = os.path.join(os.path.dirname(__file__), 'models_nvidia-api.txt')
+    models = []
+    
+    try:
+        with open(models_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith('#'):  # Skip empty lines and comments
+                    models.append(line)
+    except FileNotFoundError:
+        print(f"models.txt file not found in {os.path.dirname(__file__)}")
+        print("Using default model: meta/llama-4-maverick-17b-128e-instruct")
+        models = ["meta/llama-4-maverick-17b-128e-instruct"]
+    
+    return models
+
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
     match = re.search(r'\[(.*?)\]', text)
@@ -37,8 +55,8 @@ def extract_text_from_brackets(text):
         return match.group(1).strip()
     return ""
 
-def translate_text_with_nvidia(text, source_lang, target_lang, max_retries=5):
-    """Translate text using NVIDIA Build API via HTTP request"""
+def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_retries=5):
+    """Translate text using NVIDIA Build API via HTTP request with specified model"""
     source_lang_name = get_language_name(source_lang)
     target_lang_name = get_language_name(target_lang)
 
@@ -55,7 +73,7 @@ Text to translate: "{text}"\n\nTranslation:"""
     }
 
     payload = {
-        "model": "meta/llama-4-maverick-17b-128e-instruct",
+        "model": model_name,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": 512,
         "temperature": 0.1,
@@ -76,7 +94,7 @@ Text to translate: "{text}"\n\nTranslation:"""
                 translation = response_text.strip()
             return translation
         except Exception as e:
-            print(f"Attempt {attempt+1} failed for text '{text}': {str(e)}")
+            print(f"Attempt {attempt+1} failed for text '{text}' with model '{model_name}': {str(e)}")
             if attempt < max_retries - 1:
                 time.sleep(2)
             else:
@@ -142,51 +160,68 @@ def calculate_similarity(original, backtranslated):
         return 0.0
 
 def process_dataframe(df, source_lang, target_lang):
-    """Main processing function"""
-    print(f"Forward translation: NVIDIA Build API | Backtranslation: NLLB-3.3B")
-    print(f"Rate limiting: 38 requests per minute (~1.58 seconds between requests)")
-
-    result_df = df.copy()
-    result_df['translated'] = ""
-    result_df['backtranslated'] = ""
-    result_df['similarity_score'] = 0.0
-
+    """Main processing function for multiple models"""
+    # Get the list of models to test
+    models = get_model_list()
+    print(f"Found {len(models)} models to test: {', '.join(models)}")
+    
     # Calculate delay between requests to achieve 38 requests per minute
     delay_between_requests = 60 / 38  # Approximately 1.58 seconds
-
-    # Forward translations with rate limiting
-    translations = []
-    total_texts = len(result_df)
     
-    for i, text in enumerate(result_df['text']):
-        print(f"Translating {i+1}/{total_texts}: {text[:50]}...")
-        translation = translate_text_with_nvidia(text, source_lang, target_lang)
-        translations.append(translation)
+    # Create a list to store results for all models
+    all_results = []
+    
+    for model_name in models:
+        print(f"\n{'='*80}")
+        print(f"Processing with model: {model_name}")
+        print(f"{'='*80}")
         
-        # Show translation result
-        if translation:
-            print(f"  → {translation[:50]}...")
-        else:
-            print("  → [Translation failed]")
+        result_df = df.copy()
+        result_df['model'] = model_name  # Add model name column
+        result_df['translated'] = ""
+        result_df['backtranslated'] = ""
+        result_df['similarity_score'] = 0.0
+
+        # Forward translations with rate limiting
+        translations = []
+        total_texts = len(result_df)
         
-        # Rate limiting: wait before next request (except after the last one)
-        if i < total_texts - 1:
-            print(f"Waiting {delay_between_requests:.2f} seconds before next request...")
-            time.sleep(delay_between_requests)
+        for i, text in enumerate(result_df['text']):
+            print(f"Translating {i+1}/{total_texts} with {model_name}: {text[:50]}...")
+            translation = translate_text_with_nvidia(text, source_lang, target_lang, model_name)
+            translations.append(translation)
+            
+            # Show translation result
+            if translation:
+                print(f"  → {translation[:50]}...")
+            else:
+                print("  → [Translation failed]")
+            
+            # Rate limiting: wait before next request (except after the last one)
+            if i < total_texts - 1:
+                print(f"Waiting {delay_between_requests:.2f} seconds before next request...")
+                time.sleep(delay_between_requests)
 
-    result_df['translated'] = translations
+        result_df['translated'] = translations
 
-    # Backtranslations using NLLB-3B
-    print("Starting backtranslation with NLLB-3.3B...")
-    backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
-    result_df['backtranslated'] = backtranslations
+        # Backtranslations using NLLB-3B
+        print(f"Starting backtranslation with NLLB-3.3B for model {model_name}...")
+        backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
+        result_df['backtranslated'] = backtranslations
 
-    # Calculate similarity
-    print("Calculating similarity scores...")
-    result_df['similarity_score'] = result_df.apply(
-        lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
-        axis=1
-    )
+        # Calculate similarity
+        print(f"Calculating similarity scores for model {model_name}...")
+        result_df['similarity_score'] = result_df.apply(
+            lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
+            axis=1
+        )
 
-    print("Translation process completed!")
-    return result_df
+        # Add to all results
+        all_results.append(result_df)
+        print(f"Completed processing for model: {model_name}")
+
+    # Combine all results into a single DataFrame
+    combined_df = pd.concat(all_results, ignore_index=True)
+    print(f"\nCompleted all models! Total rows: {len(combined_df)}")
+    
+    return combined_df

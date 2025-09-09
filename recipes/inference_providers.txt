@@ -1,3 +1,0 @@
-Groq - https://console.groq.com/settings/limits
-Nvidia - https://build.nvidia.com/models 
-

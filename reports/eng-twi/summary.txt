@@ -1,9 +1,0 @@
-Translation Benchmark Results for eng-twi
-Generated on: 2025-09-09 06:06:41
-
-Model Performance:
-llama-4-maverick-17b-128e-instruct: 52.46%
-large: 38.45%
-
-Best Model: llama-4-maverick-17b-128e-instruct (52.46%)
-Average Score: 45.45%

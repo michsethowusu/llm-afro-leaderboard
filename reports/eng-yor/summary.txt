@@ -1,8 +1,0 @@
-Translation Benchmark Results for eng-yor
-Generated on: 2025-09-09 06:06:40
-
-Model Performance:
-llama-4-maverick-17b-128e-instruct: 65.65%
-
-Best Model: llama-4-maverick-17b-128e-instruct (65.65%)
-Average Score: 65.65%

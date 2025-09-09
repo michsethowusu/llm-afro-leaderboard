@@ -1,8 +1,0 @@
-Translation Benchmark Results for eng-nya
-Generated on: 2025-09-09 06:06:39
-
-Model Performance:
-llama-4-maverick-17b-128e-instruct: 67.00%
-
-Best Model: llama-4-maverick-17b-128e-instruct (67.00%)
-Average Score: 67.00%

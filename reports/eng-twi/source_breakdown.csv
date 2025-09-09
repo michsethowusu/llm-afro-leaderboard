@@ -1,0 +1,13 @@
+Model,Source,Similarity Score (%),Raw Score
+llama-4-maverick-17b-128e-instruct,movies,29.19%,29.185625910758972
+llama-4-maverick-17b-128e-instruct,news content,65.80%,65.80159862836203
+llama-4-maverick-17b-128e-instruct,news titles,73.06%,73.06493322054544
+llama-4-maverick-17b-128e-instruct,political monologue,43.07%,43.06625475486119
+llama-4-maverick-17b-128e-instruct,religious,52.65%,52.65465180079142
+llama-4-maverick-17b-128e-instruct,youtube comments,51.01%,51.0058710972468
+large,movies,28.74%,28.73921403288841
+large,news content,41.16%,41.162386175384306
+large,news titles,59.23%,59.23469836264849
+large,political monologue,29.13%,29.134770792676136
+large,religious,25.70%,25.70425995066762
+large,youtube comments,46.51%,46.50517420144752

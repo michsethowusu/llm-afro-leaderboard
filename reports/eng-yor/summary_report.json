@@ -1,0 +1,20 @@
+{
+  "language_pair": "eng-yor",
+  "timestamp": "2025-09-09T06:06:40.599294",
+  "models": {
+    "llama-4-maverick-17b-128e-instruct": 65.64899397393069
+  },
+  "average_score": 65.64899397393069,
+  "best_model": "llama-4-maverick-17b-128e-instruct",
+  "best_score": 65.64899397393069,
+  "source_breakdown": {
+    "llama-4-maverick-17b-128e-instruct": {
+      "movies": 45.49727241198222,
+      "news content": 61.53500974178314,
+      "news titles": 88.37637702624002,
+      "political monologue": 78.18951805432638,
+      "religious": 57.54834810892741,
+      "youtube comments": 62.74743850032488
+    }
+  }
+}

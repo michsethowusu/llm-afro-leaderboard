@@ -41,6 +41,13 @@ backtranslation_model_name = "facebook/nllb-200-3.3B"
 backtranslation_tokenizer = AutoTokenizer.from_pretrained(backtranslation_model_name)
 backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_model_name).to(device)
 
+def extract_text_from_brackets(text):
+    """Extract text from square brackets, return empty string if not found"""
+    match = re.search(r'\[(.*?)\]', text)
+    if match:
+        return match.group(1).strip()
+    return ""
+
 def get_model_list():
     """Read model names from models.txt file in the recipes directory"""
     models_file = os.path.join(os.path.dirname(__file__), 'models_nvidia-api.txt')

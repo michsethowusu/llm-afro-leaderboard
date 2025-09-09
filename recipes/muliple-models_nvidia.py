@@ -59,13 +59,6 @@ def get_model_list():
     
     return models
 
-def extract_text_from_brackets(text):
-    """Extract text from square brackets, return empty string if not found"""
-    match = re.search(r'\[(.*?)\]', text)
-    if match:
-        return match.group(1).strip()
-    return ""
-
 def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_retries=5):
     """Translate text using NVIDIA Build API via OpenAI client with specified model"""
     source_lang_name = get_language_name(source_lang)
@@ -89,16 +82,16 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                 ],
                 temperature=0.3,
                 top_p=0.95,
-                max_tokens=512,
+                max_tokens=4096,
                 frequency_penalty=0,
                 presence_penalty=0,
                 stream=False,
                 extra_body={"thinking_budget": -1}
             )
 
-            # Always read the response directly (like your working snippet)
+            # Simple approach - just return the response as is
             response_text = completion.choices[0].message.content
-
+            
             if response_text is None:
                 print(f"[{model_name}] Response is None on attempt {attempt+1}")
                 if attempt < max_retries - 1:
@@ -106,14 +99,8 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                     continue
                 return ""
 
-            response_text = response_text.strip()
-
-            # Extract bracketed text if present, else return the raw response
-            translation = extract_text_from_brackets(response_text)
-            if not translation:
-                translation = response_text
-
-            return translation
+            # Return the response directly without any parsing
+            return response_text.strip()
 
         except Exception as e:
             print(f"[{model_name}] Error on attempt {attempt+1} for text '{text[:50]}...': {str(e)}")

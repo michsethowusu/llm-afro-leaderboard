@@ -50,7 +50,7 @@ def extract_text_from_brackets(text):
 
 def get_model_list():
     """Read model names from models.txt file in the recipes directory"""
-    models_file = os.path.join(os.path.dirname(__file__), 'models_nvidia-api.txt')
+    models_file = os.path.join(os.path.dirname(__file__), 'models_nvidia.txt')
     models = []
     
     try:

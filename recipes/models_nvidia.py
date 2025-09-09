@@ -87,13 +87,12 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                         "content": f"Translate the following {source_lang_name} text into {target_lang_name}:\n\n{text}"
                     }
                 ],
-                temperature=0.3,
-                top_p=0.95,
-                max_tokens=4096,
+                temperature=0,
+                top_p=1,
+                max_tokens=2096,
                 frequency_penalty=0,
                 presence_penalty=0,
-                stream=False,
-                extra_body={"thinking_budget": -1}
+                stream=False
             )
 
             # Simple approach - just return the response as is

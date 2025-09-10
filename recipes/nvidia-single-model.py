@@ -32,7 +32,7 @@ backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_mo
 
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
-    match = re.search(r'\[(.*?)\]', text)
+    match = re.search(r'\[(.*?)\]', text, flags=re.S)
     if match:
         return match.group(1).strip()
     return ""
@@ -57,11 +57,9 @@ Text to translate: "{text}"\n\nTranslation:"""
     payload = {
         "model": "bytedance/seed-oss-36b-instruct",
         "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 512,
-        "temperature": 0.1,
-        "top_p": 1.0,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0,
+        "max_tokens": 2050,
+        "temperature": 0.3,
+        "top_p": 0.95,
         "stream": False
     }
 

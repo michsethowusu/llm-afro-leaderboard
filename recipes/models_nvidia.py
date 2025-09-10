@@ -43,7 +43,7 @@ backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_mo
 
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
-    match = re.search(r'\[(.*?)\]', text)
+    match = re.search(r'\[(.*?)\]', text, flags=re.S)
     if match:
         return match.group(1).strip()
     return ""

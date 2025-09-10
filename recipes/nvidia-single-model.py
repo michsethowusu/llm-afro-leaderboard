@@ -62,15 +62,16 @@ def translate_text_with_nvidia(text, source_lang, target_lang, max_retries=5):
                 ],
                 temperature=0.3,
                 top_p=0.95,
-                max_tokens=1024,
+                max_tokens=2024,
                 stream=False
             )
             
-            response_text = completion.choices[0].message.content.strip()
-            translation = extract_text_from_brackets(response_text)
-            if not translation:
-                translation = response_text.strip()
-            return translation
+            # Directly get the response content like in your working example
+            response_text = completion.choices[0].message.content
+            
+            # Simply return the response as-is without any extraction
+            return response_text.strip()
+                
         except Exception as e:
             print(f"Attempt {attempt+1} failed for text '{text}': {str(e)}")
             if attempt < max_retries - 1:

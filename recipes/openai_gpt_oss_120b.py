@@ -48,23 +48,7 @@ def extract_text_from_brackets(text):
         return match.group(1).strip()
     return ""
 
-def get_model_list():
-    """Read model names from models.txt file in the recipes directory"""
-    models_file = os.path.join(os.path.dirname(__file__), 'models_nvidia.txt')
-    models = []
-    
-    try:
-        with open(models_file, 'r') as f:
-            for line in f:
-                line = line.strip()
-                if line and not line.startswith('#'):  # Skip empty lines and comments
-                    models.append(line)
-    except FileNotFoundError:
-        print(f"models.txt file not found in {os.path.dirname(__file__)}")
-        print("Using default model: meta/llama-4-maverick-17b-128e-instruct")
-        models = ["meta/llama-4-maverick-17b-128e-instruct"]
-    
-    return models
+
 
 def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_retries=5):
     """Translate text using NVIDIA Build API via OpenAI client with specified model"""
@@ -90,8 +74,6 @@ def translate_text_with_nvidia(text, source_lang, target_lang, model_name, max_r
                 temperature=0.3,
                 top_p=0.95,
                 max_tokens=2096,
-                frequency_penalty=0,
-                presence_penalty=0,
                 stream=False
             )
 
@@ -180,6 +162,10 @@ def process_dataframe(df, source_lang, target_lang):
     """Main processing function for multiple models"""
     # Get the list of models to test
     models = get_model_list()
+    if not models:
+        print("No models found to process")
+        return pd.DataFrame()
+    
     print(f"Found {len(models)} models to test: {', '.join(models)}")
     
     # Calculate delay between requests to achieve 38 requests per minute
@@ -193,6 +179,17 @@ def process_dataframe(df, source_lang, target_lang):
         print(f"Processing with model: {model_name}")
         print(f"{'='*80}")
         
+        try:
+            # Test if model is accessible by making a simple API call
+            test_response = nvidia_client.models.retrieve(model_name)
+            if not hasattr(test_response, 'id'):
+                print(f"Model {model_name} not found or inaccessible. Skipping.")
+                continue
+                
+        except Exception as e:
+            print(f"Error accessing model {model_name}: {str(e)}. Skipping.")
+            continue
+        
         result_df = df.copy()
         result_df['model'] = model_name  # Add model name column
         result_df['translated'] = ""
@@ -202,6 +199,7 @@ def process_dataframe(df, source_lang, target_lang):
         # Forward translations with rate limiting
         translations = []
         total_texts = len(result_df)
+        processing_failed = False
         
         for i, text in enumerate(result_df['text']):
             print(f"Translating {i+1}/{total_texts} with {model_name}: {text[:50]}...")
@@ -213,11 +211,17 @@ def process_dataframe(df, source_lang, target_lang):
                 print(f"  → {translation[:50]}...")
             else:
                 print("  → [Translation failed]")
+                processing_failed = True
             
             # Rate limiting: wait before next request (except after the last one)
             if i < total_texts - 1:
                 print(f"Waiting {delay_between_requests:.2f} seconds before next request...")
                 time.sleep(delay_between_requests)
+
+        # Skip this model if translation failed for all texts
+        if processing_failed and all(not t for t in translations):
+            print(f"Skipping model {model_name} due to complete translation failure")
+            continue
 
         result_df['translated'] = translations
 
@@ -237,8 +241,22 @@ def process_dataframe(df, source_lang, target_lang):
         all_results.append(result_df)
         print(f"Completed processing for model: {model_name}")
 
+    if not all_results:
+        print("No models were successfully processed")
+        return pd.DataFrame()
+    
     # Combine all results into a single DataFrame
     combined_df = pd.concat(all_results, ignore_index=True)
     print(f"\nCompleted all models! Total rows: {len(combined_df)}")
     
     return combined_df
+
+
+def get_model_list():
+    return ['openai/gpt-oss-120b']  # Single model only
+
+if __name__ == "__main__":
+    import pandas as pd
+    df = pd.DataFrame({'text': ["Hello world", "Testing translation"]})
+    results = process_dataframe(df, source_lang="en", target_lang="fr")
+    print(results.head())

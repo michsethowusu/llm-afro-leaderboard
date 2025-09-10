@@ -2,7 +2,7 @@ import pandas as pd
 import time
 import os
 import re
-import requests
+from openai import OpenAI
 from sentence_transformers import SentenceTransformer, util
 from dotenv import load_dotenv
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
@@ -11,6 +11,12 @@ from typing import List
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Initialize NVIDIA API client
+client = OpenAI(
+    base_url="https://integrate.api.nvidia.com/v1",
+    api_key=os.getenv("NVIDIA_BUILD_API_KEY")
+)
 
 # Add utils to path
 import sys
@@ -38,37 +44,29 @@ def extract_text_from_brackets(text):
     return ""
 
 def translate_text_with_nvidia(text, source_lang, target_lang, max_retries=5):
-    """Translate text using NVIDIA Build API via HTTP request"""
+    """Translate text using NVIDIA Build API via OpenAI client"""
     source_lang_name = get_language_name(source_lang)
     target_lang_name = get_language_name(target_lang)
 
-    prompt = f"""Please translate the following text from {source_lang_name} to {target_lang_name}. 
-Return ONLY the translation inside square brackets.
-
-Text to translate: "{text}"\n\nTranslation:"""
-
-    invoke_url = "https://integrate.api.nvidia.com/v1/chat/completions"
-    api_key = os.getenv("NVIDIA_BUILD_API_KEY")
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Accept": "application/json"
-    }
-
-    payload = {
-        "model": "bytedance/seed-oss-36b-instruct",
-        "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": 2050,
-        "temperature": 0.3,
-        "top_p": 0.95,
-        "stream": False
-    }
+    prompt = f"Translate the following {source_lang_name} text into {target_lang_name} and return ONLY the translation inside square brackets:\n\n{text}"
 
     for attempt in range(max_retries):
         try:
-            response = requests.post(invoke_url, headers=headers, json=payload)
-            response.raise_for_status()
-            response_json = response.json()
-            response_text = response_json['choices'][0]['message']['content'].strip()
+            completion = client.chat.completions.create(
+                model="bytedance/seed-oss-36b-instruct",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
+                temperature=0.3,
+                top_p=0.95,
+                max_tokens=1024,
+                stream=False
+            )
+            
+            response_text = completion.choices[0].message.content.strip()
             translation = extract_text_from_brackets(response_text)
             if not translation:
                 translation = response_text.strip()
@@ -80,6 +78,7 @@ Text to translate: "{text}"\n\nTranslation:"""
             else:
                 return ""
 
+# The rest of the functions remain unchanged
 def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
     """Backtranslate texts using NLLB-3B model"""
     # Convert language codes to NLLB format

@@ -62,7 +62,7 @@ def translate_text_with_nvidia(text, source_lang, target_lang, max_retries=5):
                 ],
                 temperature=0.3,
                 top_p=0.95,
-                max_tokens=2024,
+                max_tokens=1024,
                 stream=False
             )
             

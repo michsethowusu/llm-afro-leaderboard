@@ -35,7 +35,7 @@ The initial results in this repo were generated on a small, exploratory dataset:
 
 Even at this modest scale, the experiment required two full days to run due to the number of API calls and the compute load.  
 
-⚠️ **Limitations to note**:  
+**Limitations to note**:  
 - Results are anecdotal, not definitive benchmarks.  
 - Many proprietary models weren’t tested.  
 - Scaling across multiple languages/models is resource-intensive.  
@@ -58,21 +58,21 @@ Contributions of all sizes are welcome—from dataset prep, to code improvements
 
 ## Technical Requirements
 
-LLM-Afro relies on heavy models like **Facebook’s NLLB-3B** and **MPNet**, so GPU access is highly recommended.  
+LLM-Afro relies on heavy models like Facebook’s NLLB-3B and MPNet, so GPU access is highly recommended.  
 
 You can get started in two ways:  
-- Use the provided **Google Colab notebook** for quick replication.  
+- Use the provided Google Colab notebook for quick replication.  
 - Clone the repo and run locally if you have a GPU setup.  
 
 ---
 
 ## Evaluation Methodology
 
-We use a **backtranslation + similarity check** approach:  
+We use a backtranslation + similarity check approach:  
 
 1. Translate English → African language with the LLM.  
-2. Backtranslate the output into English using **NLLB-3B**, one of the strongest MT systems available.  
-3. Measure semantic similarity between the original and backtranslated English using **MPNet embeddings**.  
+2. Backtranslate the output into English using NLLB-3B, one of the strongest MT systems available.  
+3. Measure semantic similarity between the original and backtranslated English using MPNet embeddings.  
 
 This yields a numeric score that captures how faithful the LLM’s translation was.  
 
@@ -80,7 +80,7 @@ This yields a numeric score that captures how faithful the LLM’s translation w
 
 ## License
 
-This project is released under the **MIT License**.  
+This project is released under the MIT License.  
 
 ---
 

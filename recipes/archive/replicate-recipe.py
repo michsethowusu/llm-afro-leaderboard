@@ -36,4 +36,4 @@ def generate_model_files(template_file, models_file):
     print(f"\nGenerated {len(models)} model files in the '{output_dir}' directory.")
 
 if __name__ == "__main__":
-    generate_model_files("nvidia-single-model.py", "models_nvidia.txt")
+    generate_model_files("template_nvidia-new.py", "models_nvidia.txt")

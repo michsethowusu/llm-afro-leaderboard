@@ -30,8 +30,8 @@ By building shared benchmarks, we can highlight both progress and gaps—ultimat
 
 The initial results in this repo were generated on a small, exploratory dataset:  
 - ~15 paragraphs per language (from news, literature, and academic texts)  
-- ~40 languages tested  
-- ~80 different models evaluated  
+- ~50 languages tested  
+- ~14 different models evaluated  
 
 Even at this modest scale, the experiment required two full days to run due to the number of API calls and the compute load.  
 
@@ -66,7 +66,7 @@ You can get started in two ways:
 
 ---
 
-## Evaluation Methodology
+## Translation Accuracy Scoring
 
 We use a backtranslation + similarity check approach:  
 

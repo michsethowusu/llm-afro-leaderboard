@@ -35,7 +35,6 @@ The initial results in this repo were generated on a small, exploratory dataset:
 - ~50 languages tested
 - ~14 different models evaluated
 
-Even at this modest scale, it took four full days to get complete results from the code pipeline due to inference API rate limits of NVIDIA Build.
 
 **Limitations to note**:
 

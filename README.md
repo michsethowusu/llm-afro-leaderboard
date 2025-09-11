@@ -113,7 +113,7 @@ This project is released under the MIT License.
 
 Huge thanks to the open-source community and researchers powering this project, including:
 
-- [**Facebook AI’s No Language Left Behind (NLLB) team**](https://huggingface.co/facebook/nllb-200-3.3B)
-- Authors of [**sentence-transformers/all-mpnet-base-v2**](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
+- [Facebook AI’s No Language Left Behind (NLLB) team](https://huggingface.co/facebook/nllb-200-3.3B)
+- Authors of [sentence-transformers/all-mpnet-base-v2](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)
 
 Without their work, this project wouldn’t exist.

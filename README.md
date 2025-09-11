@@ -20,7 +20,7 @@ Our aim is simple: build a transparent, reproducible way to test zero-shot trans
 
 ## About the Project
 
-African languages remain among the least represented in today’s AI landscape. Training data is limited, and benchmarks are even rarer. **LLM-Afro** sets out to change that by providing a practical, standardized way to measure how well different LLMs can translate African languages.  
+African languages remain among the least represented in today’s AI landscape. Training data is limited, and benchmarks are even rarer. LLM-Afro sets out to change that by providing a practical, standardized way to measure how well different LLMs can translate African languages.  
 
 By building shared benchmarks, we can highlight both progress and gaps—ultimately contributing to fairer, more accessible language technology across the continent.  
 
@@ -28,12 +28,12 @@ By building shared benchmarks, we can highlight both progress and gaps—ultimat
 
 ## Current Results & Limitations
 
-The initial results in this repo were generated on a **small, exploratory dataset**:  
+The initial results in this repo were generated on a small, exploratory dataset:  
 - ~15 paragraphs per language (from news, literature, and academic texts)  
 - ~40 languages tested  
 - ~80 different models evaluated  
 
-Even at this modest scale, the experiment required **two full days** to run due to the number of API calls and the compute load.  
+Even at this modest scale, the experiment required two full days to run due to the number of API calls and the compute load.  
 
 ⚠️ **Limitations to note**:  
 - Results are anecdotal, not definitive benchmarks.  

@@ -51,20 +51,20 @@ Still, this early test provides a valuable starting point for deeper work.
 
 The following models were evaluated in the initial round of testing:
 
-- **abacusai/dracarys-llama-3.1-70b-instruct**
-- **ai21labs/jamba-1.5-large-instruct**
-- **deepseek-ai/deepseek-r1-0528**
-- **deepseek-ai/deepseek-v3.1**
-- **google/gemma-2-27b-it**
-- **gotocompany/gemma-2-9b-cpt-sahabatai-instruct**
-- **meta/llama-3.3-70b-instruct**
-- **moonshotai/kimi-k2-instruct**
-- **nvidia/llama-3.1-nemotron-70b-instruct**
-- **nvidia/llama-3.1-nemotron-ultra-253b-v1**
-- **openai/gpt-oss-120b**
-- **qwen/qwen3-coder-480b-a35b-instruct**
-- **qwen/qwq-32b**
-- **writer/palmyra-creative-122b**
+- [abacusai/dracarys-llama-3.1-70b-instruct](https://huggingface.co/abacusai/dracarys-llama-3.1-70b-instruct)
+- [ai21labs/jamba-1.5-large-instruct](https://huggingface.co/ai21labs/jamba-1.5-large-instruct)
+- [deepseek-ai/deepseek-r1-0528](https://huggingface.co/deepseek-ai/deepseek-r1-0528)
+- [deepseek-ai/deepseek-v3.1](https://huggingface.co/deepseek-ai/deepseek-v3.1)
+- [google/gemma-2-27b-it](https://huggingface.co/google/gemma-2-27b-it)
+- [gotocompany/gemma-2-9b-cpt-sahabatai-instruct](https://huggingface.co/gotocompany/gemma-2-9b-cpt-sahabatai-instruct)
+- [meta/llama-3.3-70b-instruct](https://huggingface.co/meta-llama/llama-3.3-70b-instruct)
+- [moonshotai/kimi-k2-instruct](https://huggingface.co/moonshotai/kimi-k2-instruct)
+- [nvidia/llama-3.1-nemotron-70b-instruct](https://huggingface.co/nvidia/llama-3.1-nemotron-70b-instruct)
+- [nvidia/llama-3.1-nemotron-ultra-253b-v1](https://huggingface.co/nvidia/llama-3.1-nemotron-ultra-253b-v1)
+- [openai/gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b)
+- [qwen/qwen3-coder-480b-a35b-instruct](https://huggingface.co/qwen/qwen3-coder-480b-a35b-instruct)
+- [qwen/qwq-32b](https://huggingface.co/qwen/qwq-32b)
+- [writer/palmyra-creative-122b](https://huggingface.co/writer/palmyra-creative-122b)
 
 ------
 

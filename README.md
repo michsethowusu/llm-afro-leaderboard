@@ -1,6 +1,6 @@
 # LLM-Afro
 
-**LLM-Afro** is an open tool for evaluating how well Large Language Models (LLMs) handle translations to and from African languages—where data is often scarce and existing benchmarks fall short.  
+LLM-Afro is an open tool for evaluating how well Large Language Models (LLMs) handle translations to and from African languages—where data is often scarce and existing benchmarks fall short.  
 
 Our aim is simple: build a transparent, reproducible way to test zero-shot translation accuracy, so that researchers and developers can push forward inclusive, high-quality language technologies.  
 

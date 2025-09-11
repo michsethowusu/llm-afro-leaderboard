@@ -1,4 +1,4 @@
-LLM Afro
+LLM-Afro
 ===================
 
 A comprehensive benchmarking framework for evaluating machine translation accuracy of LLMs for African languages using back-translation and semantic similarity analysis.

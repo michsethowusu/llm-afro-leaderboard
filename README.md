@@ -1,142 +1,94 @@
-LLM-Afro
-===================
+# LLM-Afro
 
-A comprehensive benchmarking framework for evaluating machine translation accuracy of LLMs for African languages using back-translation and semantic similarity analysis.
+**LLM-Afro** is an open tool for evaluating how well Large Language Models (LLMs) handle translations to and from African languages—where data is often scarce and existing benchmarks fall short.  
 
-Machine Translation Benchmarking NLLB Back-translation Semantic Similarity
+Our aim is simple: build a transparent, reproducible way to test zero-shot translation accuracy, so that researchers and developers can push forward inclusive, high-quality language technologies.  
 
-Overview
---------
+---
 
-Africa MT Benchmark is a framework designed to evaluate the machine translation accuracy of LLMs for African languages using a robust back-translation and similarity scoring methodology.
+## Table of Contents
 
-Evaluation Methodology
-----------------------
+- [About the Project](#about-the-project)  
+- [Current Results & Limitations](#current-results--limitations)  
+- [How to Contribute](#how-to-contribute)  
+- [Technical Requirements](#technical-requirements)  
+- [Evaluation Methodology](#evaluation-methodology)  
+- [License](#license)  
+- [Acknowledgements](#acknowledgements)  
 
-### Back-Translation Evaluation Process
+---
 
-**Step 1: Forward Translation**
+## About the Project
 
-Source text (Language A) → Machine Translation → Translated text (Language B)
+African languages remain among the least represented in today’s AI landscape. Training data is limited, and benchmarks are even rarer. **LLM-Afro** sets out to change that by providing a practical, standardized way to measure how well different LLMs can translate African languages.  
 
-**Step 2: Back Translation**
+By building shared benchmarks, we can highlight both progress and gaps—ultimately contributing to fairer, more accessible language technology across the continent.  
 
-Translated text (Language B) → Machine Translation → Back-translated text (Language A)
+---
 
-**Step 3: Similarity Calculation**
+## Current Results & Limitations
 
-Compare original source text with back-translated text using semantic similarity metrics
+The initial results in this repo were generated on a **small, exploratory dataset**:  
+- ~15 paragraphs per language (from news, literature, and academic texts)  
+- ~40 languages tested  
+- ~80 different models evaluated  
 
-**Step 4: Performance Scoring**
+Even at this modest scale, the experiment required **two full days** to run due to the number of API calls and the compute load.  
 
-Calculate average similarity scores across the dataset to evaluate translation quality
+⚠️ **Limitations to note**:  
+- Results are anecdotal, not definitive benchmarks.  
+- Many proprietary models weren’t tested.  
+- Scaling across multiple languages/models is resource-intensive.  
 
-### Semantic Similarity Measurement
+Still, this early test provides a valuable starting point for deeper work.  
 
-The framework uses cosine similarity between sentence embeddings to measure translation quality:
+---
 
-**Formula:** similarity = cos(θ) = (A·B) / (||A||·||B||)
+## How to Contribute
 
-Where A and B are vector representations of the original and back-translated sentences.
+We’d love your help in expanding LLM-Afro. Here’s how you can get involved:  
 
-**Implementation:** We use the all-MiniLM-L6-v2 model from SentenceTransformers to generate high-quality sentence embeddings.
+- **Focused testing**: Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.  
+- **Broader sweeps**: If you have the compute, replicate the multi-language/multi-model setup and share your findings.  
+- **Missing models**: Evaluate proprietary or under-tested models by creating new “recipes.”  
 
-### Why Back-Translation Evaluation?
+Contributions of all sizes are welcome—from dataset prep, to code improvements, to sharing evaluation results.  
 
-This approach offers several advantages for evaluating MT systems for African languages:
+---
 
-*   **No parallel data required:** Works with monolingual text in the source language
-*   **Semantic preservation:** Measures how well meaning is preserved through translation
-*   **Model-agnostic:** Can evaluate any translation model regardless of architecture
-*   **Quantifiable results:** Provides numerical scores for easy comparison
-*   **Error analysis:** Allows examination of specific translation errors through comparison
+## Technical Requirements
 
-Features
---------
+LLM-Afro relies on heavy models like **Facebook’s NLLB-3B** and **MPNet**, so GPU access is highly recommended.  
 
-*   Support for multiple MT models through a recipe system
-*   Automatic language detection from folder names
-*   Comprehensive language mapping for African languages
-*   Semantic similarity scoring using sentence embeddings
-*   Performance visualization and reporting
-*   Extensible architecture for adding new models
-*   Automatic skip of already processed files
+You can get started in two ways:  
+- Use the provided **Google Colab notebook** for quick replication.  
+- Clone the repo and run locally if you have a GPU setup.  
 
-Quick Start
------------
+---
 
-### Installation
+## Evaluation Methodology
 
-    git clone https://github.com/your-username/africa-mt-benchmark.git
-    cd africa-mt-benchmark
-    pip install -r requirements.txt
+We use a **backtranslation + similarity check** approach:  
 
-### Usage
+1. Translate English → African language with the LLM.  
+2. Backtranslate the output into English using **NLLB-3B**, one of the strongest MT systems available.  
+3. Measure semantic similarity between the original and backtranslated English using **MPNet embeddings**.  
 
-1\. Prepare your data in the input directory with folder names following the pattern `source-target` (e.g., `eng-twi`)
+This yields a numeric score that captures how faithful the LLM’s translation was.  
 
-2\. Place CSV files with a `text` column in these folders
+---
 
-3\. Run the benchmark:
+## License
 
-    python main.py
+This project is released under the **MIT License**.  
 
-### Example Input Structure
+---
 
-    input/
-    ├── eng-twi/
-    │   └── sentences.csv
-    ├── eng-yor/
-    │   └── sentences.csv
-    └── eng-hau/
-        └── sentences.csv
+## Acknowledgements
 
-Tested Models
-----------------
+Huge thanks to the open-source community and researchers powering this project, including:  
 
-*   DeepSeek
-*   Mistral
-*   
+- [**Facebook AI’s No Language Left Behind (NLLB) team**](https://huggingface.co/facebook/nllb-200-3.3B)  
+- Authors of [**sentence-transformers/all-mpnet-base-v2**](https://huggingface.co/sentence-transformers/all-mpnet-base-v2)  
 
-Results Interpretation
-----------------------
-
-The benchmark generates comprehensive reports including:
-
-*   **Performance comparison charts:** Visual comparison of models across language pairs
-*   **Detailed CSV reports:** Similarity scores for each sentence and model
-*   **Summary statistics:** Average, median, and distribution of similarity scores
-*   **Model comparison visualizations:** Direct comparison of different models
-
-
-Limitations and Considerations
-------------------------------
-
-While the back-translation evaluation method is powerful, it has some limitations:
-
-*   May not capture all nuances of translation quality
-*   Semantic similarity models may have their own biases
-*   Does not evaluate grammatical correctness directly
-*   Cultural nuances and idioms may not be fully captured
-
-We recommend using this benchmark alongside human evaluation for comprehensive assessment.
-
-**Note:** This project is designed to work well on Google Colab with GPU acceleration for faster model inference.
-
-License
--------
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-
-Citation
---------
-
-If you use this benchmark in your research, please cite:
-
-    @software{africa-llm-mt-benchmark,
-      title = {Africa LLM MT Benchmark: A Framework for Evaluating Machine Translation Accuracy of LLMs for African Languages},
-      author = {Mich-Seth Owusu},
-      year = {2023},
-      url = {https://github.com/michsethowusu/africa-llm-mt-benchmark}
-    }
+Without their work, this project wouldn’t exist.  

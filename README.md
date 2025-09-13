@@ -1,6 +1,6 @@
-# LLM Afro Eval
+# LLM Afro Leaderboard
 
-LLM Afro Eval is an open tool for evaluating how well Large Language Models (LLMs) handle translations to and from African languages—where data is often scarce and existing benchmarks fall short.
+LLM Afro Leaderboard is an open tool for evaluating how well Large Language Models (LLMs) handle translations to and from African languages—where data is often scarce and existing benchmarks fall short.
 
 Our aim is simple: build a transparent, reproducible way to test zero-shot translation accuracy, so that researchers and developers can push forward inclusive, high-quality language technologies.
 
@@ -21,7 +21,7 @@ Our aim is simple: build a transparent, reproducible way to test zero-shot trans
 
 ## About the Project
 
-African languages remain among the least represented in today’s AI landscape. Training data is limited, and benchmarks are even rarer. LLM Afro Eval sets out to change that by providing a practical, standardized way to measure how well different LLMs can translate African languages.
+African languages remain among the least represented in today’s AI landscape. Training data is limited, and benchmarks are even rarer. LLM Afro Leaderboard sets out to change that by providing a practical, standardized way to measure how well different LLMs can translate African languages.
 
 By building shared benchmarks, we can highlight both progress and gaps—ultimately contributing to fairer, more accessible language technology across the continent.
 
@@ -69,7 +69,7 @@ The following models were evaluated in the initial round of testing:
 
 ## How to Contribute
 
-We’d love your help in expanding LLM Afro Eval. Here’s how you can get involved:
+We’d love your help in expanding LLM Afro Leaderboard. Here’s how you can get involved:
 
 - **Focused testing**: Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.
 - **Broader sweeps**: If you have the compute, replicate the multi-language/multi-model setup and share your findings.
@@ -81,7 +81,7 @@ Contributions of all sizes are welcome—from dataset prep, to code improvements
 
 ## Technical Requirements
 
-LLM Afro Eval relies on heavy models like Facebook’s NLLB-3B and MPNet, so GPU access is highly recommended.
+LLM Afro Leaderboard relies on heavy models like Facebook’s NLLB-3B and MPNet, so GPU access is highly recommended.
 
 You can get started in two ways:
 

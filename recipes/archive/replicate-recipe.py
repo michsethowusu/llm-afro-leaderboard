@@ -11,7 +11,7 @@ def generate_model_files(template_file, models_file):
         models = [line.strip() for line in f if line.strip()]
     
     # Create output directory if it doesn't exist
-    output_dir = "generated_models"
+    output_dir = "generated_recipes"
     os.makedirs(output_dir, exist_ok=True)
     
     # Generate a file for each model
@@ -36,4 +36,4 @@ def generate_model_files(template_file, models_file):
     print(f"\nGenerated {len(models)} model files in the '{output_dir}' directory.")
 
 if __name__ == "__main__":
-    generate_model_files("template_nvidia-new.py", "models_nvidia.txt")
+    generate_model_files("template_nvidia.py", "models_nvidia.txt")

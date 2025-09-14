@@ -65,10 +65,8 @@ def process_csv(input_path, recipe_module, source_lang, target_lang, mode="full"
     # Process with the specified language codes
     if mode == "forward_only" and hasattr(recipe_module, 'forward_translation_only'):
         processed_df = recipe_module.forward_translation_only(df, source_lang=source_lang, target_lang=target_lang)
-    elif mode == "backtranslation_only" and hasattr(recipe_module, 'backtranslation_only_no_similarity'):
-        processed_df = recipe_module.backtranslation_only_no_similarity(df, source_lang=source_lang, target_lang=target_lang)
-    elif mode == "similarity_only" and hasattr(recipe_module, 'similarity_only'):
-        processed_df = recipe_module.similarity_only(df, source_lang=source_lang, target_lang=target_lang)
+    elif mode == "backtranslation_only" and hasattr(recipe_module, 'backtranslation_only'):
+        processed_df = recipe_module.backtranslation_only(df, source_lang=source_lang, target_lang=target_lang)
     else:
         processed_df = recipe_module.process_dataframe(df, source_lang=source_lang, target_lang=target_lang)
     
@@ -126,9 +124,9 @@ def run_forward_translation(input_dir, output_dir, language_pairs, recipes, stat
                     except Exception as e:
                         print(f"Error applying {recipe_name} to {file} for {source_lang}-{target_lang}: {str(e)}")
 
-def run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, state):
-    """Run only the backtranslation part without similarity"""
-    print("Running backtranslation only (without similarity)...")
+def run_backtranslation(input_dir, output_dir, language_pairs, recipes, state):
+    """Run only the backtranslation and similarity part"""
+    print("Running backtranslation and similarity only...")
     
     # Process each language pair
     for source_lang, target_lang in language_pairs:
@@ -157,11 +155,11 @@ def run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, sta
                         print(f"Skipping backtranslation for {recipe_name} on {file} ({source_lang}-{target_lang}) - already completed")
                         continue
                     
-                    print(f"Processing backtranslation only for {recipe_name} on {file} ({source_lang}-{target_lang})")
+                    print(f"Processing backtranslation for {recipe_name} on {file} ({source_lang}-{target_lang})")
                     
                     try:
                         # Check if recipe supports backtranslation only mode
-                        if hasattr(recipe_module, 'backtranslation_only_no_similarity'):
+                        if hasattr(recipe_module, 'backtranslation_only'):
                             # Read the file that should contain forward translations
                             if os.path.exists(output_path):
                                 # Load backtranslation models only when needed
@@ -177,72 +175,13 @@ def run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, sta
                                 state[state_key]['backtranslation_completed'] = True
                                 save_processing_state(state)
                                 
-                                print(f"Completed backtranslation only with {recipe_name} on {file} for {source_lang}-{target_lang}")
+                                print(f"Completed backtranslation with {recipe_name} on {file} for {source_lang}-{target_lang}")
                             else:
                                 print(f"File not found: {output_path}")
                         else:
                             print(f"Recipe {recipe_name} doesn't support backtranslation-only mode")
                     except Exception as e:
                         print(f"Error applying backtranslation with {recipe_name} to {file} for {source_lang}-{target_lang}: {str(e)}")
-
-def run_similarity_only(input_dir, output_dir, language_pairs, recipes, state):
-    """Run only the similarity calculation part"""
-    print("Running similarity calculation only...")
-    
-    # Process each language pair
-    for source_lang, target_lang in language_pairs:
-        # Create language pair directory in output
-        lang_pair_dir = os.path.join(output_dir, f"{source_lang}-{target_lang}")
-        os.makedirs(lang_pair_dir, exist_ok=True)
-        
-        # Process each CSV file in the input directory
-        for file in os.listdir(input_dir):
-            if file.endswith(".csv"):
-                input_path = os.path.join(input_dir, file)
-                
-                for recipe_name, recipe_module in recipes.items():
-                    # Generate recipe-specific output filename
-                    output_filename = get_output_filename(file, recipe_name)
-                    output_path = os.path.join(lang_pair_dir, output_filename)
-                    
-                    # Check if backtranslation has been completed
-                    state_key = f"{source_lang}-{target_lang}/{file}/{recipe_name}"
-                    if not state.get(state_key, {}).get('backtranslation_completed', False):
-                        print(f"Skipping similarity for {recipe_name} on {file} ({source_lang}-{target_lang}) - backtranslation not completed")
-                        continue
-                    
-                    # Check if similarity has already been completed
-                    if state.get(state_key, {}).get('similarity_completed', False):
-                        print(f"Skipping similarity for {recipe_name} on {file} ({source_lang}-{target_lang}) - already completed")
-                        continue
-                    
-                    print(f"Processing similarity only for {recipe_name} on {file} ({source_lang}-{target_lang})")
-                    
-                    try:
-                        # Check if recipe supports similarity only mode
-                        if hasattr(recipe_module, 'similarity_only'):
-                            # Read the file that should contain backtranslations
-                            if os.path.exists(output_path):
-                                # Load similarity models only when needed
-                                if hasattr(recipe_module, 'load_similarity_models'):
-                                    recipe_module.load_similarity_models()
-                                
-                                df = pd.read_csv(output_path)
-                                result_df = process_csv(output_path, recipe_module, 
-                                                      source_lang, target_lang, "similarity_only")
-                                result_df.to_csv(output_path, index=False)
-                                
-                                # Update state
-                                state[state_key]['similarity_completed'] = True
-                                save_processing_state(state)
-                                
-                                print(f"Completed similarity calculation with {recipe_name} on {file} for {source_lang}-{target_lang}")
-                            else:
-                                print(f"File not found: {output_path}")
-                        else:
-                            print(f"Recipe {recipe_name} doesn't support similarity-only mode")
-                    except Exception as e:
-                        print(f"Error applying similarity calculation with {recipe_name} to {file} for {source_lang}-{target_lang}: {str(e)}")
 
 def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
     """Run the full process (forward translation + backtranslation + similarity)"""
@@ -266,7 +205,7 @@ def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
                     
                     # Check if this recipe has already processed this file for this language pair
                     state_key = f"{source_lang}-{target_lang}/{file}/{recipe_name}"
-                    if state.get(state_key, {}).get('similarity_completed', False):
+                    if state.get(state_key, {}).get('backtranslation_completed', False):
                         print(f"Skipping {recipe_name} for {file} ({source_lang}-{target_lang}) - already processed")
                         continue
                     
@@ -274,7 +213,7 @@ def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
                     print(f"Output will be saved to {output_path}")
                     
                     try:
-                        # For full process, load all models
+                        # For full process, load backtranslation models only when needed
                         if hasattr(recipe_module, 'load_backtranslation_models'):
                             recipe_module.load_backtranslation_models()
                             
@@ -284,8 +223,7 @@ def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
                         # Update state
                         state[state_key] = {
                             'forward_completed': True,
-                            'backtranslation_completed': True,
-                            'similarity_completed': True
+                            'backtranslation_completed': True
                         }
                         save_processing_state(state)
                         
@@ -299,21 +237,20 @@ def display_menu():
     print("Translation Pipeline Menu")
     print("="*50)
     print("1. Run only forward translation")
-    print("2. Run only backtranslation (without similarity)")
-    print("3. Run only similarity calculation")
-    print("4. Run full process (forward + backtranslation + similarity)")
-    print("5. Generate reports only")
-    print("6. Reset processing state")
-    print("7. Exit")
+    print("2. Run only backtranslation and similarity")
+    print("3. Run full process (forward + backtranslation + similarity)")
+    print("4. Generate reports only")
+    print("5. Reset processing state")
+    print("6. Exit")
     print("="*50)
     
     while True:
         try:
-            choice = input("Please select an option (1-7): ")
-            if choice in ["1", "2", "3", "4", "5", "6", "7"]:
+            choice = input("Please select an option (1-6): ")
+            if choice in ["1", "2", "3", "4", "5", "6"]:
                 return choice
             else:
-                print("Invalid option. Please enter a number between 1 and 7.")
+                print("Invalid option. Please enter a number between 1 and 6.")
         except KeyboardInterrupt:
             print("\nExiting...")
             sys.exit(0)
@@ -350,17 +287,15 @@ def main():
         if choice == "1":
             run_forward_translation(input_dir, output_dir, language_pairs, recipes, state)
         elif choice == "2":
-            run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, state)
+            run_backtranslation(input_dir, output_dir, language_pairs, recipes, state)
         elif choice == "3":
-            run_similarity_only(input_dir, output_dir, language_pairs, recipes, state)
-        elif choice == "4":
             run_full_process(input_dir, output_dir, language_pairs, recipes, state)
-        elif choice == "5":
+        elif choice == "4":
             generate_report(output_dir)
-        elif choice == "6":
+        elif choice == "5":
             reset_processing_state()
             state = {}  # Reset in-memory state
-        elif choice == "7":
+        elif choice == "6":
             print("Exiting...")
             break
 

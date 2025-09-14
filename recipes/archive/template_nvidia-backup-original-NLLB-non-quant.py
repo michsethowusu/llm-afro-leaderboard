@@ -30,6 +30,12 @@ def load_backtranslation_models():
     """Load backtranslation models only when needed"""
     global similarity_model, backtranslation_tokenizer, backtranslation_model, device
     
+    if similarity_model is None:
+        from sentence_transformers import SentenceTransformer
+        similarity_model_name = "sentence-transformers/all-mpnet-base-v2"
+        similarity_model = SentenceTransformer(similarity_model_name)
+        print("Loaded similarity model")
+    
     if backtranslation_tokenizer is None or backtranslation_model is None:
         from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
         import torch
@@ -42,16 +48,6 @@ def load_backtranslation_models():
         backtranslation_tokenizer = AutoTokenizer.from_pretrained(backtranslation_model_name)
         backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_model_name).to(device)
         print("Loaded NLLB backtranslation models")
-
-def load_similarity_models():
-    """Load similarity models only when needed"""
-    global similarity_model
-    
-    if similarity_model is None:
-        from sentence_transformers import SentenceTransformer
-        similarity_model_name = "sentence-transformers/all-mpnet-base-v2"
-        similarity_model = SentenceTransformer(similarity_model_name)
-        print("Loaded similarity model")
 
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
@@ -130,39 +126,21 @@ def forward_translation_only(df, source_lang, target_lang):
     result_df['translated'] = translations
     return result_df
 
-def backtranslation_only_no_similarity(df, source_lang, target_lang):
-    """Perform only backtranslation without similarity calculation"""
+def backtranslation_only(df, source_lang, target_lang):
+    """Perform only backtranslation and similarity calculation"""
     # Load models if not already loaded
     load_backtranslation_models()
     
-    print(f"Backtranslation only (no similarity): NLLB-3.3B")
+    print(f"Backtranslation only: NLLB-3.3B")
     
     result_df = df.copy()
-    
-    # Check if backtranslated column exists, if not create it
-    if 'backtranslated' not in result_df.columns:
-        result_df['backtranslated'] = ""
-    
+    result_df['backtranslated'] = ""
+    result_df['similarity_score'] = 0.0
+
     # Backtranslations using NLLB-3B
     print("Starting backtranslation with NLLB-3.3B...")
     backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
     result_df['backtranslated'] = backtranslations
-
-    print("Backtranslation process completed (without similarity)!")
-    return result_df
-
-def similarity_only(df, source_lang, target_lang):
-    """Perform only similarity calculation on existing backtranslated text"""
-    # Load models if not already loaded
-    load_similarity_models()
-    
-    print(f"Similarity calculation only")
-    
-    result_df = df.copy()
-    
-    # Check if similarity_score column exists, if not create it
-    if 'similarity_score' not in result_df.columns:
-        result_df['similarity_score'] = 0.0
 
     # Calculate similarity
     print("Calculating similarity scores...")
@@ -171,7 +149,7 @@ def similarity_only(df, source_lang, target_lang):
         axis=1
     )
 
-    print("Similarity calculation completed!")
+    print("Backtranslation process completed!")
     return result_df
 
 def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
@@ -223,7 +201,7 @@ def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str
 def calculate_similarity(original, backtranslated):
     """Calculate cosine similarity between original and backtranslated text"""
     # Load models if not already loaded
-    load_similarity_models()
+    load_backtranslation_models()
     
     try:
         if not original or not backtranslated:
@@ -244,7 +222,6 @@ def process_dataframe(df, source_lang, target_lang):
     """Main processing function - full process"""
     # Load models if not already loaded
     load_backtranslation_models()
-    load_similarity_models()
     
     print(f"Forward translation: NVIDIA Build API | Backtranslation: NLLB-3.3B")
     print(f"Rate limiting: 38 requests per minute (~1.58 seconds between requests)")

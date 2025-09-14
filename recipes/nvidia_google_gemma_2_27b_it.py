@@ -5,10 +5,6 @@ import re
 from openai import OpenAI
 from dotenv import load_dotenv
 from typing import List
-import ctranslate2
-from transformers import AutoTokenizer
-import gc
-import torch
 
 # Load environment variables from .env file
 load_dotenv()
@@ -24,151 +20,276 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
 from language_mapping import get_language_name, get_iso2_code, get_nllb_code
 
-# Initialize global variables
-backtranslation_tokenizer = None
-translator = None
+# Initialize variables for models (will be loaded on demand)
 similarity_model = None
+backtranslation_tokenizer = None
+backtranslation_model = None
+device = None
 
-# -------------------------------
-# Load backtranslation model (float16, GPU)
-# -------------------------------
 def load_backtranslation_models():
-    global backtranslation_tokenizer, translator
-    if backtranslation_tokenizer is None or translator is None:
-        backtranslation_tokenizer = AutoTokenizer.from_pretrained("facebook/nllb-200-3.3B")
-        print("Loaded NLLB tokenizer")
+    """Load backtranslation models only when needed"""
+    global similarity_model, backtranslation_tokenizer, backtranslation_model, device
+    
+    if backtranslation_tokenizer is None or backtranslation_model is None:
+        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+        import torch
         
-        # Full precision (float16) on GPU
-        model_path = "nllb-200-3.3B-float16-ct2"
-        device = "cuda" if ctranslate2.get_cuda_device_count() > 0 else "cpu"
-        translator = ctranslate2.Translator(model_path, device=device, compute_type="float16")
-        print(f"Loaded NLLB model on {device} (float16)")
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"Using device: {device} for NLLB backtranslation")
+        
+        # Load NLLB model and tokenizer for backtranslation
+        backtranslation_model_name = "facebook/nllb-200-3.3B"
+        backtranslation_tokenizer = AutoTokenizer.from_pretrained(backtranslation_model_name)
+        backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_model_name).to(device)
+        print("Loaded NLLB backtranslation models")
 
-# -------------------------------
-# Extract text inside brackets
-# -------------------------------
+def load_similarity_models():
+    """Load similarity models only when needed"""
+    global similarity_model
+    
+    if similarity_model is None:
+        from sentence_transformers import SentenceTransformer
+        similarity_model_name = "sentence-transformers/all-mpnet-base-v2"
+        similarity_model = SentenceTransformer(similarity_model_name)
+        print("Loaded similarity model")
+
 def extract_text_from_brackets(text):
+    """Extract text from square brackets, return empty string if not found"""
     match = re.search(r'\[(.*?)\]', text, flags=re.S)
     if match:
         return match.group(1).strip()
     return ""
 
-# -------------------------------
-# NVIDIA Build API translation
-# -------------------------------
 def translate_text_with_nvidia(text, source_lang, target_lang, max_retries=5):
+    """Translate text using NVIDIA Build API via OpenAI client"""
     source_lang_name = get_language_name(source_lang)
     target_lang_name = get_language_name(target_lang)
+
     prompt = f"Translate the following {source_lang_name} text into {target_lang_name} and return ONLY the translation inside square brackets:\n\n{text}"
 
     for attempt in range(max_retries):
         try:
             completion = client.chat.completions.create(
                 model="abacusai/dracarys-llama-3.1-70b-instruct",
-                messages=[{"role": "user", "content": prompt}],
+                messages=[
+                    {
+                        "role": "user",
+                        "content": prompt
+                    }
+                ],
                 temperature=0.3,
                 top_p=0.95,
                 max_tokens=2024,
                 stream=False
             )
-            return completion.choices[0].message.content.strip()
+            
+            # Directly get the response content like in your working example
+            response_text = completion.choices[0].message.content
+            
+            # Simply return the response as-is without any extraction
+            return response_text.strip()
+                
         except Exception as e:
-            print(f"Attempt {attempt+1} failed: {str(e)}")
+            print(f"Attempt {attempt+1} failed for text '{text}': {str(e)}")
             if attempt < max_retries - 1:
                 time.sleep(2)
             else:
                 return ""
 
-# -------------------------------
-# Forward translation only
-# -------------------------------
 def forward_translation_only(df, source_lang, target_lang):
-    print("Forward translation using NVIDIA Build API")
+    """Perform only forward translation"""
+    print(f"Forward translation only: NVIDIA Build API")
+    print(f"Rate limiting: 38 requests per minute (~1.58 seconds between requests)")
+
     result_df = df.copy()
+    result_df['translated'] = ""
+
+    # Calculate delay between requests to achieve 38 requests per minute
+    delay_between_requests = 60 / 38  # Approximately 1.58 seconds
+
+    # Forward translations with rate limiting
     translations = []
-
-    delay = 60 / 38  # 38 requests per minute
-
+    total_texts = len(result_df)
+    
     for i, text in enumerate(result_df['text']):
-        print(f"Translating {i+1}/{len(result_df)}: {text[:50]}...")
+        print(f"Translating {i+1}/{total_texts}: {text[:50]}...")
         translation = translate_text_with_nvidia(text, source_lang, target_lang)
-        translations.append(translation or "")
-        if i < len(result_df)-1:
-            time.sleep(delay)
+        translations.append(translation)
+        
+        # Show translation result
+        if translation:
+            print(f"  → {translation[:50]}...")
+        else:
+            print("  → [Translation failed]")
+        
+        # Rate limiting: wait before next request (except after the last one)
+        if i < total_texts - 1:
+            print(f"Waiting {delay_between_requests:.2f} seconds before next request...")
+            time.sleep(delay_between_requests)
 
     result_df['translated'] = translations
     return result_df
 
-# -------------------------------
-# Backtranslation (one by one)
-# -------------------------------
-def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
+def backtranslation_only_no_similarity(df, source_lang, target_lang):
+    """Perform only backtranslation without similarity calculation"""
+    # Load models if not already loaded
     load_backtranslation_models()
-    nllb_source = get_nllb_code(target_lang)
-    nllb_target = get_nllb_code(source_lang)
-    src_token = backtranslation_tokenizer.convert_tokens_to_ids([nllb_source])[0]
-    tgt_token = backtranslation_tokenizer.convert_tokens_to_ids([nllb_target])[0]
-    eos_token = backtranslation_tokenizer.convert_tokens_to_ids(["</s>"])[0]
+    
+    print(f"Backtranslation only (no similarity): NLLB-3.3B")
+    
+    result_df = df.copy()
+    
+    # Check if backtranslated column exists, if not create it
+    if 'backtranslated' not in result_df.columns:
+        result_df['backtranslated'] = ""
+    
+    # Backtranslations using NLLB-3B
+    print("Starting backtranslation with NLLB-3.3B...")
+    backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
+    result_df['backtranslated'] = backtranslations
 
+    print("Backtranslation process completed (without similarity)!")
+    return result_df
+
+def similarity_only(df, source_lang, target_lang):
+    """Perform only similarity calculation on existing backtranslated text"""
+    # Load models if not already loaded
+    load_similarity_models()
+    
+    print(f"Similarity calculation only")
+    
+    result_df = df.copy()
+    
+    # Check if similarity_score column exists, if not create it
+    if 'similarity_score' not in result_df.columns:
+        result_df['similarity_score'] = 0.0
+
+    # Calculate similarity
+    print("Calculating similarity scores...")
+    result_df['similarity_score'] = result_df.apply(
+        lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
+        axis=1
+    )
+
+    print("Similarity calculation completed!")
+    return result_df
+
+def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
+    """Backtranslate texts using NLLB-3B model"""
+    # Load models if not already loaded
+    load_backtranslation_models()
+    
+    # Convert language codes to NLLB format
+    nllb_source = get_nllb_code(target_lang)  # Note: target_lang becomes source for backtranslation
+    nllb_target = get_nllb_code(source_lang)  # Note: source_lang becomes target for backtranslation
+    
     backtranslations = []
-    for idx, text in enumerate(texts):
-        if not text:
+    
+    for i, text in enumerate(texts):
+        if not text:  # Skip empty texts
             backtranslations.append("")
             continue
+            
         try:
-            tokens = [src_token] + backtranslation_tokenizer.encode(text, add_special_tokens=False) + [eos_token]
-            token_ids = backtranslation_tokenizer.convert_ids_to_tokens(tokens)
-            result = translator.translate_batch([token_ids], target_prefix=[[tgt_token]], max_batch_size=1)
-            if result and result[0].hypotheses:
-                hyp = result[0].hypotheses[0]
-                decoded = backtranslation_tokenizer.decode(backtranslation_tokenizer.convert_tokens_to_ids(hyp[1:]), skip_special_tokens=True)
-                backtranslations.append(decoded)
-                print(f"Backtranslated {idx+1}/{len(texts)}: {text[:50]}... → {decoded[:50]}...")
-            else:
-                backtranslations.append("")
-                print(f"Backtranslation failed for text '{text}'")
+            # Set source language
+            backtranslation_tokenizer.src_lang = nllb_source
+            
+            # Encode the text
+            inputs = backtranslation_tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+            
+            # Generate translation
+            generated_tokens = backtranslation_model.generate(
+                **inputs,
+                forced_bos_token_id=backtranslation_tokenizer.convert_tokens_to_ids(nllb_target),
+                max_length=512
+            )
+            
+            # Decode the translation
+            backtranslation = backtranslation_tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
+            backtranslations.append(backtranslation)
+            
+            # Show progress
+            print(f"Backtranslated {i+1}/{len(texts)}: {text[:50]}... → {backtranslation[:50]}...")
+            
         except Exception as e:
-            print(f"Error backtranslating text '{text}': {str(e)}")
+            print(f"NLLB backtranslation failed for text '{text}': {str(e)}")
             backtranslations.append("")
+            
+        # Add a small delay to prevent overwhelming the system
+        time.sleep(0.1)
+    
     return backtranslations
 
-# -------------------------------
-# Similarity (CPU only)
-# -------------------------------
-def calculate_similarity_cpu(df: pd.DataFrame) -> pd.Series:
-    global similarity_model
-    if similarity_model is None:
-        from sentence_transformers import SentenceTransformer, util
-        similarity_model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2", device="cpu")
-    originals = df['text'].tolist()
-    backs = df['backtranslated'].tolist()
-    embeddings_orig = similarity_model.encode(originals, batch_size=32, convert_to_tensor=True)
-    embeddings_back = similarity_model.encode(backs, batch_size=32, convert_to_tensor=True)
-    from sentence_transformers import util
-    scores = util.pytorch_cos_sim(embeddings_orig, embeddings_back).diagonal().cpu().numpy()
-    return pd.Series(scores, name="similarity_score")
+def calculate_similarity(original, backtranslated):
+    """Calculate cosine similarity between original and backtranslated text"""
+    # Load models if not already loaded
+    load_similarity_models()
+    
+    try:
+        if not original or not backtranslated:
+            return 0.0
 
-# -------------------------------
-# Full pipeline
-# -------------------------------
+        clean_backtranslated = extract_text_from_brackets(backtranslated)
+        if not clean_backtranslated:
+            clean_backtranslated = backtranslated
+
+        from sentence_transformers import util
+        embeddings = similarity_model.encode([original, clean_backtranslated])
+        return util.pytorch_cos_sim(embeddings[0], embeddings[1]).item()
+    except Exception as e:
+        print(f"Error calculating similarity: {str(e)}")
+        return 0.0
+
 def process_dataframe(df, source_lang, target_lang):
-    # Forward translation
-    df = forward_translation_only(df, source_lang, target_lang)
+    """Main processing function - full process"""
+    # Load models if not already loaded
+    load_backtranslation_models()
+    load_similarity_models()
+    
+    print(f"Forward translation: NVIDIA Build API | Backtranslation: NLLB-3.3B")
+    print(f"Rate limiting: 38 requests per minute (~1.58 seconds between requests)")
 
-    # Backtranslation
-    print("Starting backtranslation...")
-    df['backtranslated'] = backtranslate_with_nllb(df['translated'].tolist(), source_lang, target_lang)
+    result_df = df.copy()
+    result_df['translated'] = ""
+    result_df['backtranslated'] = ""
+    result_df['similarity_score'] = 0.0
 
-    # Free GPU before similarity
-    print("Freeing GPU memory...")
-    global translator, backtranslation_tokenizer
-    del translator, backtranslation_tokenizer
-    gc.collect()
-    torch.cuda.empty_cache()
+    # Calculate delay between requests to achieve 38 requests per minute
+    delay_between_requests = 60 / 38  # Approximately 1.58 seconds
 
-    # Similarity calculation on CPU
-    print("Calculating similarity on CPU...")
-    df['similarity_score'] = calculate_similarity_cpu(df)
+    # Forward translations with rate limiting
+    translations = []
+    total_texts = len(result_df)
+    
+    for i, text in enumerate(result_df['text']):
+        print(f"Translating {i+1}/{total_texts}: {text[:50]}...")
+        translation = translate_text_with_nvidia(text, source_lang, target_lang)
+        translations.append(translation)
+        
+        # Show translation result
+        if translation:
+            print(f"  → {translation[:50]}...")
+        else:
+            print("  → [Translation failed]")
+        
+        # Rate limiting: wait before next request (except after the last one)
+        if i < total_texts - 1:
+            print(f"Waiting {delay_between_requests:.2f} seconds before next request...")
+            time.sleep(delay_between_requests)
 
-    return df
+    result_df['translated'] = translations
 
+    # Backtranslations using NLLB-3B
+    print("Starting backtranslation with NLLB-3.3B...")
+    backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
+    result_df['backtranslated'] = backtranslations
+
+    # Calculate similarity
+    print("Calculating similarity scores...")
+    result_df['similarity_score'] = result_df.apply(
+        lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
+        axis=1
+    )
+
+    print("Translation process completed!")
+    return result_df

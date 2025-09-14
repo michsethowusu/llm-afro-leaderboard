@@ -152,107 +152,61 @@ def backtranslation_only(df, source_lang, target_lang):
     return result_df
 
 def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
-    """Backtranslate texts using quantized NLLB model with CTranslate2"""
+    """
+    Backtranslate texts using quantized NLLB model with CTranslate2,
+    processing each text individually (no batching).
+    """
     # Load models if not already loaded
     load_backtranslation_models()
-    
+
     # Convert language codes to NLLB format
-    nllb_source = get_nllb_code(target_lang)  # Note: target_lang becomes source for backtranslation
-    nllb_target = get_nllb_code(source_lang)  # Note: source_lang becomes target for backtranslation
-    
+    nllb_source = get_nllb_code(target_lang)  # target becomes source for backtranslation
+    nllb_target = get_nllb_code(source_lang)  # source becomes target for backtranslation
+
     backtranslations = []
-    
+
     # Precompute special tokens
     src_lang_token = backtranslation_tokenizer.convert_tokens_to_ids([nllb_source])[0]
     tgt_lang_token = backtranslation_tokenizer.convert_tokens_to_ids([nllb_target])[0]
     eos_token = backtranslation_tokenizer.convert_tokens_to_ids(["</s>"])[0]
-    
-    # Process in batches for efficiency
-    batch_size = 4
-    for i in range(0, len(texts), batch_size):
-        batch_texts = texts[i:i+batch_size]
-        batch_tokens = []
-        
-        for text in batch_texts:
-            if not text:  # Skip empty texts
-                batch_tokens.append([])
-                continue
-                
-            try:
-                # Encode with source language code
-                src_tokens = [src_lang_token] + backtranslation_tokenizer.encode(text, add_special_tokens=False) + [eos_token]
-                tokens = backtranslation_tokenizer.convert_ids_to_tokens(src_tokens)
-                batch_tokens.append(tokens)
-            except Exception as e:
-                print(f"Tokenization failed for text '{text}': {str(e)}")
-                batch_tokens.append([])
-        
-        # Translate batch
+
+    for idx, text in enumerate(texts):
+        if not text:
+            backtranslations.append("")
+            continue
+
         try:
-            results = translator.translate_batch(
-                batch_tokens,
-                target_prefix=[[nllb_target]] * len(batch_tokens),
-                batch_type="examples",
-                max_batch_size=batch_size
+            # Encode with source language code
+            src_tokens = [src_lang_token] + \
+                         backtranslation_tokenizer.encode(text, add_special_tokens=False) + \
+                         [eos_token]
+            tokens = backtranslation_tokenizer.convert_ids_to_tokens(src_tokens)
+
+            # Translate *one at a time* (max_batch_size=1)
+            result = translator.translate_batch(
+                [tokens],
+                target_prefix=[[nllb_target]],
+                max_batch_size=1
             )
-            
-            # Decode results
-            for j, result in enumerate(results):
-                if result.hypotheses:
-                    output_tokens = result.hypotheses[0]
-                    # Skip the target language token at the beginning
-                    translation = backtranslation_tokenizer.decode(
-                        backtranslation_tokenizer.convert_tokens_to_ids(output_tokens[1:]), 
-                        skip_special_tokens=True
-                    )
-                    backtranslations.append(translation)
-                    
-                    # Show progress
-                    idx = i + j
-                    if idx < len(texts):
-                        print(f"Backtranslated {idx+1}/{len(texts)}: {texts[idx][:50]}... → {translation[:50]}...")
-                else:
-                    backtranslations.append("")
-                    print(f"Backtranslation failed for text '{texts[i+j]}'")
-                    
+
+            if result and result[0].hypotheses:
+                output_tokens = result[0].hypotheses[0]
+                translation = backtranslation_tokenizer.decode(
+                    backtranslation_tokenizer.convert_tokens_to_ids(output_tokens[1:]),
+                    skip_special_tokens=True
+                )
+                backtranslations.append(translation)
+                print(f"Backtranslated {idx+1}/{len(texts)}: {text[:50]}... → {translation[:50]}...")
+            else:
+                backtranslations.append("")
+                print(f"Backtranslation failed for text '{text}'")
+
         except Exception as e:
-            print(f"Batch translation failed: {str(e)}")
-            # Fallback to individual translations
-            for j in range(len(batch_texts)):
-                try:
-                    text = batch_texts[j]
-                    if not text:
-                        backtranslations.append("")
-                        continue
-                        
-                    # Encode with source language code
-                    src_tokens = [src_lang_token] + backtranslation_tokenizer.encode(text, add_special_tokens=False) + [eos_token]
-                    tokens = backtranslation_tokenizer.convert_ids_to_tokens(src_tokens)
-                    
-                    # Translate individually
-                    result = translator.translate_batch(
-                        [tokens],
-                        target_prefix=[[nllb_target]],
-                        max_batch_size=1
-                    )
-                    
-                    if result and result[0].hypotheses:
-                        output_tokens = result[0].hypotheses[0]
-                        translation = backtranslation_tokenizer.decode(
-                            backtranslation_tokenizer.convert_tokens_to_ids(output_tokens[1:]), 
-                            skip_special_tokens=True
-                        )
-                        backtranslations.append(translation)
-                        print(f"Backtranslated {i+j+1}/{len(texts)}: {text[:50]}... → {translation[:50]}...")
-                    else:
-                        backtranslations.append("")
-                        print(f"Backtranslation failed for text '{text}'")
-                        
-                except Exception as e2:
-                    print(f"Individual backtranslation failed for text '{text}': {str(e2)}")
-                    backtranslations.append("")
-    
+            print(f"Individual backtranslation failed for text '{text}': {str(e)}")
+            backtranslations.append("")
+
     return backtranslations
+
 
 def calculate_similarity(original, backtranslated):
     """Calculate cosine similarity between original and backtranslated text"""

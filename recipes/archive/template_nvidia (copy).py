@@ -19,9 +19,39 @@ client = OpenAI(
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
 from language_mapping import get_language_name, get_iso2_code, get_nllb_code
-from model_cache import get_backtranslation_model, get_similarity_model, clear_model_cache
 
-# Remove global model variables since we'll use the cache
+# Initialize variables for models (will be loaded on demand)
+similarity_model = None
+backtranslation_tokenizer = None
+backtranslation_model = None
+device = None
+
+def load_backtranslation_models():
+    """Load backtranslation models only when needed"""
+    global similarity_model, backtranslation_tokenizer, backtranslation_model, device
+    
+    if backtranslation_tokenizer is None or backtranslation_model is None:
+        from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+        import torch
+        
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"Using device: {device} for NLLB backtranslation")
+        
+        # Load NLLB model and tokenizer for backtranslation
+        backtranslation_model_name = "facebook/nllb-200-3.3B"
+        backtranslation_tokenizer = AutoTokenizer.from_pretrained(backtranslation_model_name)
+        backtranslation_model = AutoModelForSeq2SeqLM.from_pretrained(backtranslation_model_name).to(device)
+        print("Loaded NLLB backtranslation models")
+
+def load_similarity_models():
+    """Load similarity models only when needed"""
+    global similarity_model
+    
+    if similarity_model is None:
+        from sentence_transformers import SentenceTransformer
+        similarity_model_name = "sentence-transformers/all-mpnet-base-v2"
+        similarity_model = SentenceTransformer(similarity_model_name)
+        print("Loaded similarity model")
 
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
@@ -102,6 +132,9 @@ def forward_translation_only(df, source_lang, target_lang):
 
 def backtranslation_only_no_similarity(df, source_lang, target_lang):
     """Perform only backtranslation without similarity calculation"""
+    # Load models if not already loaded
+    load_backtranslation_models()
+    
     print(f"Backtranslation only (no similarity): NLLB-3.3B")
     
     result_df = df.copy()
@@ -120,6 +153,9 @@ def backtranslation_only_no_similarity(df, source_lang, target_lang):
 
 def similarity_only(df, source_lang, target_lang):
     """Perform only similarity calculation on existing backtranslated text"""
+    # Load models if not already loaded
+    load_similarity_models()
+    
     print(f"Similarity calculation only")
     
     result_df = df.copy()
@@ -140,11 +176,8 @@ def similarity_only(df, source_lang, target_lang):
 
 def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
     """Backtranslate texts using NLLB-3B model"""
-    # Get models from cache
-    backtranslation_models = get_backtranslation_model()
-    tokenizer = backtranslation_models['tokenizer']
-    model = backtranslation_models['model']
-    device = backtranslation_models['device']
+    # Load models if not already loaded
+    load_backtranslation_models()
     
     # Convert language codes to NLLB format
     nllb_source = get_nllb_code(target_lang)  # Note: target_lang becomes source for backtranslation
@@ -159,20 +192,20 @@ def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str
             
         try:
             # Set source language
-            tokenizer.src_lang = nllb_source
+            backtranslation_tokenizer.src_lang = nllb_source
             
             # Encode the text
-            inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+            inputs = backtranslation_tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
             
             # Generate translation
-            generated_tokens = model.generate(
+            generated_tokens = backtranslation_model.generate(
                 **inputs,
-                forced_bos_token_id=tokenizer.convert_tokens_to_ids(nllb_target),
+                forced_bos_token_id=backtranslation_tokenizer.convert_tokens_to_ids(nllb_target),
                 max_length=512
             )
             
             # Decode the translation
-            backtranslation = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
+            backtranslation = backtranslation_tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
             backtranslations.append(backtranslation)
             
             # Show progress
@@ -189,6 +222,9 @@ def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str
 
 def calculate_similarity(original, backtranslated):
     """Calculate cosine similarity between original and backtranslated text"""
+    # Load models if not already loaded
+    load_similarity_models()
+    
     try:
         if not original or not backtranslated:
             return 0.0
@@ -197,9 +233,6 @@ def calculate_similarity(original, backtranslated):
         if not clean_backtranslated:
             clean_backtranslated = backtranslated
 
-        # Get similarity model from cache
-        similarity_model = get_similarity_model()
-        
         from sentence_transformers import util
         embeddings = similarity_model.encode([original, clean_backtranslated])
         return util.pytorch_cos_sim(embeddings[0], embeddings[1]).item()
@@ -209,6 +242,10 @@ def calculate_similarity(original, backtranslated):
 
 def process_dataframe(df, source_lang, target_lang):
     """Main processing function - full process"""
+    # Load models if not already loaded
+    load_backtranslation_models()
+    load_similarity_models()
+    
     print(f"Forward translation: NVIDIA Build API | Backtranslation: NLLB-3.3B")
     print(f"Rate limiting: 38 requests per minute (~1.58 seconds between requests)")
 
@@ -256,8 +293,3 @@ def process_dataframe(df, source_lang, target_lang):
 
     print("Translation process completed!")
     return result_df
-
-# Add a function to clear models when needed
-def clear_models():
-    """Clear cached models to free memory"""
-    clear_model_cache()

@@ -9,7 +9,6 @@ import json
 # Add utils to path
 sys.path.append(os.path.join(os.path.dirname(__file__), 'utils'))
 from reporting import generate_report
-from model_cache import clear_model_cache
 
 def load_recipes(recipes_dir="recipes"):
     recipes = {}
@@ -96,9 +95,6 @@ def run_forward_translation(input_dir, output_dir, language_pairs, recipes, stat
                 input_path = os.path.join(input_dir, file)
                 
                 for recipe_name, recipe_module in recipes.items():
-                    # Clear model cache before processing with a new recipe
-                    clear_model_cache()
-                    
                     # Generate recipe-specific output filename
                     output_filename = get_output_filename(file, recipe_name)
                     output_path = os.path.join(lang_pair_dir, output_filename)
@@ -146,9 +142,6 @@ def run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, sta
                 input_path = os.path.join(input_dir, file)
                 
                 for recipe_name, recipe_module in recipes.items():
-                    # Clear model cache before processing with a new recipe
-                    clear_model_cache()
-                    
                     # Generate recipe-specific output filename
                     output_filename = get_output_filename(file, recipe_name)
                     output_path = os.path.join(lang_pair_dir, output_filename)
@@ -171,6 +164,10 @@ def run_backtranslation_only(input_dir, output_dir, language_pairs, recipes, sta
                         if hasattr(recipe_module, 'backtranslation_only_no_similarity'):
                             # Read the file that should contain forward translations
                             if os.path.exists(output_path):
+                                # Load backtranslation models only when needed
+                                if hasattr(recipe_module, 'load_backtranslation_models'):
+                                    recipe_module.load_backtranslation_models()
+                                
                                 df = pd.read_csv(output_path)
                                 result_df = process_csv(output_path, recipe_module, 
                                                       source_lang, target_lang, "backtranslation_only")
@@ -204,9 +201,6 @@ def run_similarity_only(input_dir, output_dir, language_pairs, recipes, state):
                 input_path = os.path.join(input_dir, file)
                 
                 for recipe_name, recipe_module in recipes.items():
-                    # Clear model cache before processing with a new recipe
-                    clear_model_cache()
-                    
                     # Generate recipe-specific output filename
                     output_filename = get_output_filename(file, recipe_name)
                     output_path = os.path.join(lang_pair_dir, output_filename)
@@ -229,6 +223,10 @@ def run_similarity_only(input_dir, output_dir, language_pairs, recipes, state):
                         if hasattr(recipe_module, 'similarity_only'):
                             # Read the file that should contain backtranslations
                             if os.path.exists(output_path):
+                                # Load similarity models only when needed
+                                if hasattr(recipe_module, 'load_similarity_models'):
+                                    recipe_module.load_similarity_models()
+                                
                                 df = pd.read_csv(output_path)
                                 result_df = process_csv(output_path, recipe_module, 
                                                       source_lang, target_lang, "similarity_only")
@@ -262,9 +260,6 @@ def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
                 input_path = os.path.join(input_dir, file)
                 
                 for recipe_name, recipe_module in recipes.items():
-                    # Clear model cache before processing with a new recipe
-                    clear_model_cache()
-                    
                     # Generate recipe-specific output filename
                     output_filename = get_output_filename(file, recipe_name)
                     output_path = os.path.join(lang_pair_dir, output_filename)
@@ -279,6 +274,10 @@ def run_full_process(input_dir, output_dir, language_pairs, recipes, state):
                     print(f"Output will be saved to {output_path}")
                     
                     try:
+                        # For full process, load all models
+                        if hasattr(recipe_module, 'load_backtranslation_models'):
+                            recipe_module.load_backtranslation_models()
+                            
                         result_df = process_csv(input_path, recipe_module, source_lang, target_lang)
                         result_df.to_csv(output_path, index=False)
                         

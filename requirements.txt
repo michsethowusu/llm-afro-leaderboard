@@ -3,4 +3,8 @@ torch>=1.9.0
 numpy>=1.21.0
 python-dotenv
 openai
+ctranslate2
+transformers
+sentencepiece
+sacremoses
 

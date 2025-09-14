@@ -168,7 +168,7 @@ def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str
     eos_token = backtranslation_tokenizer.convert_tokens_to_ids(["</s>"])[0]
     
     # Process in batches for efficiency
-    batch_size = 10
+    batch_size = 4
     for i in range(0, len(texts), batch_size):
         batch_texts = texts[i:i+batch_size]
         batch_tokens = []

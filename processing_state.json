@@ -220,5 +220,1757 @@
   },
   "eng-dik/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
     "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-dik/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-dyu/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-ewe/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-fon/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-ful/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-hau/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-ibo/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kam/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kik/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kmb/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kin/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kon/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-lin/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-lug/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-nso/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-nus/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-nya/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kea/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-orm/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-run/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-sna/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-som/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-ssw/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-swa/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-tir/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-tsn/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-tso/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-tum/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-twi/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-umb/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-wol/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-xho/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-yor/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kab/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-kbp/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-lus/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-mlg/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-mos/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-sag/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-taq/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-tzm/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_ai21labs_jamba_1_5_large_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_meta_llama_3_3_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_writer_palmyra_creative_122b": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_openai_gpt_oss_120b": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_deepseek_ai_deepseek_r1_0528": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_google_gemma_2_27b_it": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_deepseek_ai_deepseek_v3_1": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_qwen_qwq_32b": {
+    "forward_completed": true
+  },
+  "eng-zul/sentences.csv/nvidia_moonshotai_kimi_k2_instruct": {
+    "forward_completed": true
   }
 }

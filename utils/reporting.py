@@ -1,286 +1,267 @@
 import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from pathlib import Path
-import json
-import numpy as np
-from datetime import datetime
 import re
+import json
+from datetime import datetime
+from pathlib import Path
 
-# Set style for plots
-plt.style.use('default')
-sns.set_palette("husl")
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
+import plotly.io as pio
 
+pio.templates.default = "plotly_white"
+
+
+# ---------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------
 def get_available_recipes(recipes_dir="recipes"):
-    """Dynamically discover all available recipes"""
     recipes = []
-    for file in os.listdir(recipes_dir):
-        if file.endswith(".py") and file != "__init__.py":
-            recipe_name = file[:-3]  # Remove .py extension
-            recipes.append(recipe_name)
+    if not os.path.isdir(recipes_dir):
+        return recipes
+    for f in os.listdir(recipes_dir):
+        if f.endswith(".py") and f != "__init__.py":
+            recipes.append(f[:-3])
     return recipes
 
+
 def extract_recipe_name_from_filename(filename, available_recipes):
-    """Extract recipe name from filename by matching against available recipes"""
-    # Remove file extension
-    name_without_ext = os.path.splitext(filename)[0]
-    
-    # Try to find which recipe name is in the filename
+    name = os.path.splitext(filename)[0]
     for recipe in available_recipes:
-        if f"_{recipe}" in name_without_ext:
+        if f"_{recipe}" in name:
             return recipe
-    
-    # If no match found, try to extract using pattern
-    match = re.search(r'_([^_]+)$', name_without_ext)
-    if match:
-        return match.group(1)
-    
-    return "unknown_recipe"
+    m = re.search(r'_([^_]+)$', name)
+    return m.group(1) if m else "unknown_recipe"
+
 
 def collect_results(input_dir="output"):
-    """Collect all results from processed CSV files in the output directory"""
-    results = {}
-    source_breakdown = {}  # New: to store breakdown by source
-    available_recipes = get_available_recipes()
-    
-    for root, dirs, files in os.walk(input_dir):
+    results, source_breakdown = {}, {}
+    recipes = get_available_recipes()
+
+    for root, _, files in os.walk(input_dir):
         for file in files:
-            if file.endswith(".csv"):
-                folder_name = os.path.basename(root)
-                if '-' in folder_name:  # Only process folders with language pairs
-                    source_lang, target_lang = folder_name.split('-', 1)
-                    
-                    # Extract recipe name from filename
-                    recipe_name = extract_recipe_name_from_filename(file, available_recipes)
-                    
-                    # Read the CSV file
-                    try:
-                        df = pd.read_csv(os.path.join(root, file))
-                        
-                        # Check if the file has been processed (has similarity_score column)
-                        if 'similarity_score' in df.columns:
-                            # Calculate overall average
-                            avg_score = df['similarity_score'].mean()
-                            results.setdefault(f"{source_lang}-{target_lang}", {})[recipe_name] = avg_score * 100
-                            
-                            # Calculate breakdown by source if source column exists
-                            if 'source' in df.columns:
-                                source_breakdown.setdefault(f"{source_lang}-{target_lang}", {})
-                                source_breakdown[f"{source_lang}-{target_lang}"].setdefault(recipe_name, {})
-                                
-                                # Group by source and calculate average similarity
-                                for source, group in df.groupby('source'):
-                                    source_avg = group['similarity_score'].mean() * 100
-                                    source_breakdown[f"{source_lang}-{target_lang}"][recipe_name][source] = source_avg
-                    
-                    except Exception as e:
-                        print(f"Error reading {file}: {str(e)}")
-                        continue
-                    
+            if not file.endswith(".csv"):
+                continue
+            folder = os.path.basename(root)
+            if "-" not in folder:
+                continue
+            src, tgt = folder.split("-", 1)
+            recipe = extract_recipe_name_from_filename(file, recipes)
+            try:
+                df = pd.read_csv(os.path.join(root, file))
+            except Exception as e:
+                print(f"Error reading {file}: {e}")
+                continue
+            if "similarity_score" not in df.columns:
+                continue
+            avg = df["similarity_score"].mean() * 100
+            lp = f"{src}-{tgt}"
+            results.setdefault(lp, {})[recipe] = avg
+            if "source" in df.columns:
+                source_breakdown.setdefault(lp, {}).setdefault(recipe, {})
+                for s, g in df.groupby("source"):
+                    source_breakdown[lp][recipe][s] = g["similarity_score"].mean() * 100
     return results, source_breakdown
 
-def generate_language_specific_reports(results, source_breakdown, output_dir="reports"):
-    """Generate individual reports for each language pair with source breakdown"""
-    for language_pair, model_results in results.items():
-        # Create language-specific directory
-        lang_output_dir = os.path.join(output_dir, language_pair)
-        os.makedirs(lang_output_dir, exist_ok=True)
-        
-        # Prepare data for visualization
-        models = list(model_results.keys())
-        scores = list(model_results.values())
-        
-        if not models:
-            print(f"No model results found for {language_pair}")
+
+# ---------------------------------------------------------------------
+# Chart utilities  (all horizontal + ascending)
+# ---------------------------------------------------------------------
+def horizontal_bar(data, title, xlabel, filename, outdir):
+    """Simple horizontal bar (ascending)."""
+    sorted_data = sorted(data.items(), key=lambda x: x[1])
+    labels, vals = zip(*sorted_data)
+    colors = px.colors.qualitative.Set3
+    if len(labels) > len(colors):
+        colors *= (len(labels) // len(colors) + 1)
+
+    fig = go.Figure(go.Bar(
+        x=vals,
+        y=labels,
+        orientation="h",
+        marker=dict(color=colors[:len(labels)],
+                    line=dict(color="rgba(50,50,50,0.8)", width=1)),
+        text=[f"{v:.2f}%" for v in vals],
+        textposition="outside"
+    ))
+    fig.update_layout(
+        title=dict(text=title, x=0.5, font=dict(size=18)),
+        xaxis=dict(title=xlabel, gridcolor="lightgray", gridwidth=1),
+        yaxis=dict(title="", categoryorder="array", categoryarray=list(labels)),
+        plot_bgcolor="white", paper_bgcolor="white",
+        margin=dict(l=150, r=80, t=80, b=60),
+        height=max(400, len(labels) * 50 + 100)
+    )
+    fig.write_html(os.path.join(outdir, f"{filename}.html"))
+    fig.write_image(os.path.join(outdir, f"{filename}.png"),
+                    width=1200, height=max(400, len(labels) * 50 + 100))
+    return fig
+
+
+def stacked_horizontal(data_dict, title, xlabel, filename, outdir):
+    """Stacked horizontal (ascending by total)."""
+    if not data_dict:
+        return
+    all_sources = sorted({s for m in data_dict.values() for s in m})
+    totals = {m: sum(v.values()) for m, v in data_dict.items()}
+    model_order = [m for m, _ in sorted(totals.items(), key=lambda x: x[1])]
+
+    colors = px.colors.qualitative.Set3
+    if len(all_sources) > len(colors):
+        colors *= (len(all_sources) // len(colors) + 1)
+
+    fig = go.Figure()
+    for i, s in enumerate(all_sources):
+        vals = [data_dict.get(m, {}).get(s, 0) for m in model_order]
+        fig.add_trace(go.Bar(
+            name=s, x=vals, y=model_order, orientation="h",
+            marker=dict(color=colors[i % len(colors)]),
+            text=[f"{v:.1f}%" if v > 0 else "" for v in vals],
+            textposition="inside"
+        ))
+    fig.update_layout(
+        title=dict(text=title, x=0.5, font=dict(size=18)),
+        xaxis=dict(title=xlabel, gridcolor="lightgray"),
+        yaxis=dict(title="", categoryorder="array", categoryarray=model_order),
+        barmode="stack",
+        plot_bgcolor="white", paper_bgcolor="white",
+        margin=dict(l=150, r=80, t=80, b=60),
+        height=max(400, len(model_order) * 60 + 150),
+        legend=dict(orientation="v", yanchor="top", y=1, xanchor="left", x=1.02)
+    )
+    fig.write_html(os.path.join(outdir, f"{filename}.html"))
+    fig.write_image(os.path.join(outdir, f"{filename}.png"),
+                    width=1400, height=max(400, len(model_order) * 60 + 150))
+    return fig
+
+
+# ---------------------------------------------------------------------
+# Reporting
+# ---------------------------------------------------------------------
+def generate_language_specific_reports(results, breakdown, outdir="reports"):
+    for lp, model_results in results.items():
+        lang_dir = os.path.join(outdir, lp)
+        os.makedirs(lang_dir, exist_ok=True)
+        if not model_results:
             continue
-            
-        # Generate language-specific bar chart (overall)
-        plt.figure(figsize=(10, 6))
-        bars = plt.bar(models, scores)
-        plt.title(f'Translation Quality for {language_pair}')
-        plt.ylabel('Similarity Score (%)')
-        plt.xticks(rotation=45)
-        
-        # Add value labels on top of bars
-        for bar, score in zip(bars, scores):
-            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
-                    f'{score:.2f}%', ha='center', va='bottom')
-        
-        plt.tight_layout()
-        plt.savefig(os.path.join(lang_output_dir, 'performance_comparison.png'), dpi=300)
-        plt.close()
-        
-        # Generate stacked bar chart by source if we have source breakdown data
-        if language_pair in source_breakdown and source_breakdown[language_pair]:
-            plt.figure(figsize=(12, 8))
-            
-            # Get all unique sources across all models
-            all_sources = set()
-            for model_data in source_breakdown[language_pair].values():
-                all_sources.update(model_data.keys())
-            all_sources = sorted(list(all_sources))
-            
-            # Prepare data for stacked bar chart
-            bottom = np.zeros(len(models))
-            colors = plt.cm.Set3(np.linspace(0, 1, len(all_sources)))
-            
-            for i, source in enumerate(all_sources):
-                source_scores = []
-                for model in models:
-                    if model in source_breakdown[language_pair] and source in source_breakdown[language_pair][model]:
-                        source_scores.append(source_breakdown[language_pair][model][source])
-                    else:
-                        source_scores.append(0)
-                
-                bars = plt.bar(models, source_scores, bottom=bottom, label=source, color=colors[i])
-                bottom += source_scores
-            
-            plt.title(f'Translation Quality by Source for {language_pair}')
-            plt.ylabel('Similarity Score (%)')
-            plt.xticks(rotation=45)
-            plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
-            plt.tight_layout()
-            plt.savefig(os.path.join(lang_output_dir, 'source_breakdown.png'), dpi=300, bbox_inches='tight')
-            plt.close()
-        
-        # Generate language-specific CSV report
-        report_data = []
-        for model, score in model_results.items():
-            report_data.append({
-                'Model': model,
-                'Similarity Score (%)': f"{score:.2f}%",
-                'Raw Score': score
-            })
-        
-        report_df = pd.DataFrame(report_data)
-        report_df.to_csv(os.path.join(lang_output_dir, 'detailed_report.csv'), index=False)
-        
-        # Generate source breakdown CSV if available
-        if language_pair in source_breakdown and source_breakdown[language_pair]:
-            source_report_data = []
-            for model, sources in source_breakdown[language_pair].items():
-                for source, score in sources.items():
-                    source_report_data.append({
-                        'Model': model,
-                        'Source': source,
-                        'Similarity Score (%)': f"{score:.2f}%",
-                        'Raw Score': score
-                    })
-            
-            source_report_df = pd.DataFrame(source_report_data)
-            source_report_df.to_csv(os.path.join(lang_output_dir, 'source_breakdown.csv'), index=False)
-        
-        # Generate language-specific summary
+
+        # horizontal per-language bar
+        horizontal_bar(model_results,
+                       f"Translation Quality for {lp}",
+                       "Similarity Score (%)",
+                       "performance_comparison",
+                       lang_dir)
+
+        # stacked source breakdown
+        if lp in breakdown and breakdown[lp]:
+            stacked_horizontal(breakdown[lp],
+                               f"Translation Quality by Source for {lp}",
+                               "Similarity Score (%)",
+                               "source_breakdown",
+                               lang_dir)
+
+        # CSV + summary (still descending)
+        df = (pd.DataFrame([
+            {"Model": m,
+             "Similarity Score (%)": f"{v:.2f}%",
+             "Raw Score": v} for m, v in model_results.items()])
+              .sort_values("Raw Score", ascending=False))
+        df.to_csv(os.path.join(lang_dir, "detailed_report.csv"), index=False)
+
+        if lp in breakdown and breakdown[lp]:
+            srows = []
+            for m, srcs in breakdown[lp].items():
+                for s, v in srcs.items():
+                    srows.append({"Model": m, "Source": s,
+                                  "Similarity Score (%)": f"{v:.2f}%",
+                                  "Raw Score": v})
+            pd.DataFrame(srows).to_csv(os.path.join(lang_dir, "source_breakdown.csv"), index=False)
+
         summary = {
-            'language_pair': language_pair,
-            'timestamp': datetime.now().isoformat(),
-            'models': model_results,
-            'average_score': np.mean(scores) if scores else 0,
-            'best_model': max(model_results, key=model_results.get) if model_results else "none",
-            'best_score': max(scores) if scores else 0
+            "language_pair": lp,
+            "timestamp": datetime.now().isoformat(),
+            "models": model_results,
+            "average_score": np.mean(list(model_results.values())),
+            "best_model": max(model_results, key=model_results.get),
+            "best_score": max(model_results.values())
         }
-        
-        # Add source breakdown to summary if available
-        if language_pair in source_breakdown and source_breakdown[language_pair]:
-            summary['source_breakdown'] = source_breakdown[language_pair]
-        
-        # Save summary as JSON
-        with open(os.path.join(lang_output_dir, 'summary_report.json'), 'w') as f:
+        if lp in breakdown:
+            summary["source_breakdown"] = breakdown[lp]
+        with open(os.path.join(lang_dir, "summary_report.json"), "w") as f:
             json.dump(summary, f, indent=2)
-        
-        print(f"Generated report for {language_pair} in {lang_output_dir}/")
-        
-        # Also create a simple text summary
-        with open(os.path.join(lang_output_dir, 'summary.txt'), 'w') as f:
-            f.write(f"Translation Benchmark Results for {language_pair}\n")
-            f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-            f.write("\nModel Performance:\n")
-            for model, score in sorted(model_results.items(), key=lambda x: x[1], reverse=True):
-                f.write(f"{model}: {score:.2f}%\n")
+
+        with open(os.path.join(lang_dir, "summary.txt"), "w") as f:
+            f.write(f"Translation Benchmark Results for {lp}\n")
+            f.write(f"Generated on: {datetime.now():%Y-%m-%d %H:%M:%S}\n\nModel Performance:\n")
+            for m, v in sorted(model_results.items(), key=lambda x: x[1], reverse=True):
+                f.write(f"{m}: {v:.2f}%\n")
             f.write(f"\nBest Model: {summary['best_model']} ({summary['best_score']:.2f}%)\n")
             f.write(f"Average Score: {summary['average_score']:.2f}%\n")
 
-def generate_overall_summary(results, source_breakdown, output_dir="reports"):
-    """Generate an overall summary across all language pairs"""
+
+def generate_overall_summary(results, breakdown, outdir="reports"):
     if not results:
         return
-        
-    # Prepare data for overall summary
-    all_models = set()
-    for lang_results in results.values():
-        all_models.update(lang_results.keys())
-    
-    # Calculate average performance per model across all languages
-    model_performance = {}
-    for model in all_models:
-        scores = []
-        for lang_results in results.values():
-            if model in lang_results:
-                scores.append(lang_results[model])
-        if scores:
-            model_performance[model] = np.mean(scores)
-    
-    # Create overall summary
+
+    # overall model averages
+    model_perf = {}
+    for m in {mm for v in results.values() for mm in v}:
+        vals = [v[m] for v in results.values() if m in v]
+        if vals:
+            model_perf[m] = np.mean(vals)
+
+    # overall language averages across models
+    lang_perf = {lp: np.mean(list(v.values())) for lp, v in results.items() if v}
+
     summary = {
-        'timestamp': datetime.now().isoformat(),
-        'total_language_pairs': len(results),
-        'total_models': len(all_models),
-        'model_performance': model_performance,
-        'best_overall_model': max(model_performance, key=model_performance.get) if model_performance else "none",
-        'best_overall_score': max(model_performance.values()) if model_performance else 0,
-        'language_pairs': list(results.keys())
+        "timestamp": datetime.now().isoformat(),
+        "total_language_pairs": len(results),
+        "total_models": len({mm for v in results.values() for mm in v}),
+        "model_performance": model_perf,
+        "language_performance": lang_perf,
+        "best_overall_model": max(model_perf, key=model_perf.get) if model_perf else "none",
+        "best_overall_score": max(model_perf.values()) if model_perf else 0,
     }
-    
-    # Save overall summary
-    with open(os.path.join(output_dir, 'overall_summary.json'), 'w') as f:
+    with open(os.path.join(outdir, "overall_summary.json"), "w") as f:
         json.dump(summary, f, indent=2)
-    
-    # Create overall performance chart
-    if model_performance:
-        models = list(model_performance.keys())
-        scores = list(model_performance.values())
-        
-        plt.figure(figsize=(12, 8))
-        bars = plt.bar(models, scores)
-        plt.title('Overall Model Performance Across All Language Pairs')
-        plt.ylabel('Average Similarity Score (%)')
-        plt.xticks(rotation=45)
-        
-        # Add value labels on top of bars
-        for bar, score in zip(bars, scores):
-            plt.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5, 
-                    f'{score:.2f}%', ha='center', va='bottom')
-        
-        plt.tight_layout()
-        plt.savefig(os.path.join(output_dir, 'overall_performance.png'), dpi=300)
-        plt.close()
-    
+
+    if model_perf:
+        horizontal_bar(model_perf,
+                       "Overall Model Performance Across All Language Pairs",
+                       "Average Similarity Score (%)",
+                       "overall_model_performance",
+                       outdir)
+
+    if lang_perf:
+        horizontal_bar(lang_perf,
+                       "Language Translation Performance Across Models (DeepSeek, OpenAI OSS, Llama, Google Gemma)",
+                       "Average Accuracy Score (%)",
+                       "overall_language_performance",
+                       outdir)
+
     return summary
 
+
 def generate_report(input_dir="output", output_dir="reports"):
-    """Main function to generate reports"""
-    print("Generating performance reports...")
-    
-    # Create output directory if it doesn't exist
+    print("Generating performance reports…")
     os.makedirs(output_dir, exist_ok=True)
-    
-    # Collect results from all processed files
-    results, source_breakdown = collect_results(input_dir)
-    
+
+    results, breakdown = collect_results(input_dir)
     if not results:
-        print("No processed results found. Please run translations first.")
+        print("No processed results found.")
         return
-    
-    # Generate language-specific reports
-    generate_language_specific_reports(results, source_breakdown, output_dir)
-    
-    # Generate overall summary
-    overall_summary = generate_overall_summary(results, source_breakdown, output_dir)
-    
-    print(f"Reports generated successfully in {output_dir}/")
-    
-    if overall_summary:
-        print(f"Overall best model: {overall_summary['best_overall_model']} ({overall_summary['best_overall_score']:.2f}%)")
-    
-    return results, overall_summary
+
+    generate_language_specific_reports(results, breakdown, output_dir)
+    overall = generate_overall_summary(results, breakdown, output_dir)
+
+    print(f"Reports generated in {output_dir}")
+    if overall:
+        print(f"Best overall model: {overall['best_overall_model']} "
+              f"({overall['best_overall_score']:.2f}%)")
+    return results, overall
+
+
+if __name__ == "__main__":
+    generate_report()
+

@@ -5,8 +5,6 @@ import re
 from openai import OpenAI
 from dotenv import load_dotenv
 from typing import List
-import torch
-import numpy as np
 
 # Load environment variables from .env file
 load_dotenv()
@@ -22,6 +20,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'utils'))
 from language_mapping import get_language_name, get_iso2_code, get_nllb_code
 from model_cache import get_backtranslation_model, get_similarity_model, clear_model_cache
+
+# Remove global model variables since we'll use the cache
 
 def extract_text_from_brackets(text):
     """Extract text from square brackets, return empty string if not found"""
@@ -112,7 +112,7 @@ def backtranslation_only_no_similarity(df, source_lang, target_lang):
     
     # Backtranslations using NLLB-3B
     print("Starting backtranslation with NLLB-3.3B...")
-    backtranslations = backtranslate_with_nllb_batch(result_df['translated'].tolist(), source_lang, target_lang)
+    backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
     result_df['backtranslated'] = backtranslations
 
     print("Backtranslation process completed (without similarity)!")
@@ -128,16 +128,18 @@ def similarity_only(df, source_lang, target_lang):
     if 'similarity_score' not in result_df.columns:
         result_df['similarity_score'] = 0.0
 
-    # Calculate similarity in batches for better performance
+    # Calculate similarity
     print("Calculating similarity scores...")
-    similarity_scores = calculate_similarity_batch(result_df['text'].tolist(), result_df['backtranslated'].tolist())
-    result_df['similarity_score'] = similarity_scores
+    result_df['similarity_score'] = result_df.apply(
+        lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
+        axis=1
+    )
 
     print("Similarity calculation completed!")
     return result_df
 
-def backtranslate_with_nllb_batch(texts: List[str], source_lang: str, target_lang: str, batch_size: int = 16) -> List[str]:
-    """Backtranslate texts using NLLB-3B model with batch processing"""
+def backtranslate_with_nllb(texts: List[str], source_lang: str, target_lang: str) -> List[str]:
+    """Backtranslate texts using NLLB-3B model"""
     # Get models from cache
     backtranslation_models = get_backtranslation_model()
     tokenizer = backtranslation_models['tokenizer']
@@ -149,130 +151,61 @@ def backtranslate_with_nllb_batch(texts: List[str], source_lang: str, target_lan
     nllb_target = get_nllb_code(source_lang)  # Note: source_lang becomes target for backtranslation
     
     backtranslations = []
-    total_batches = (len(texts) + batch_size - 1) // batch_size
     
-    # Process texts in batches
-    for batch_idx in range(0, len(texts), batch_size):
-        batch_texts = texts[batch_idx:batch_idx + batch_size]
-        batch_indices = list(range(batch_idx, min(batch_idx + batch_size, len(texts))))
-        
-        # Filter out empty texts
-        non_empty_indices = [i for i, text in enumerate(batch_texts) if text and text.strip()]
-        non_empty_texts = [text for text in batch_texts if text and text.strip()]
-        
-        if not non_empty_texts:
-            # All texts in this batch are empty
-            backtranslations.extend([""] * len(batch_texts))
+    for i, text in enumerate(texts):
+        if not text:  # Skip empty texts
+            backtranslations.append("")
             continue
             
         try:
             # Set source language
             tokenizer.src_lang = nllb_source
             
-            # Encode the batch of texts
-            inputs = tokenizer(
-                non_empty_texts, 
-                return_tensors="pt", 
-                truncation=True, 
-                padding=True, 
-                max_length=128,  # Reduced max_length for faster processing
-                return_attention_mask=True
-            ).to(device)
+            # Encode the text
+            inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
             
-            # Generate translations
-            with torch.no_grad():
-                generated_tokens = model.generate(
-                    **inputs,
-                    forced_bos_token_id=tokenizer.convert_tokens_to_ids(nllb_target),
-                    max_length=150,  # Reduced max_length for faster processing
-                    num_beams=4,     # Reduced from default (often 5-6) for speed
-                    early_stopping=True,
-                    no_repeat_ngram_size=2
-                )
+            # Generate translation
+            generated_tokens = model.generate(
+                **inputs,
+                forced_bos_token_id=tokenizer.convert_tokens_to_ids(nllb_target),
+                max_length=512
+            )
             
-            # Decode the translations
-            batch_translations = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
-            
-            # Map translations back to their original positions
-            batch_results = [""] * len(batch_texts)
-            for idx, translation in zip(non_empty_indices, batch_translations):
-                batch_results[idx] = translation
-            
-            backtranslations.extend(batch_results)
+            # Decode the translation
+            backtranslation = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
+            backtranslations.append(backtranslation)
             
             # Show progress
-            print(f"Backtranslated batch {batch_idx//batch_size + 1}/{total_batches}: "
-                  f"{batch_idx + 1}-{min(batch_idx + batch_size, len(texts))}/{len(texts)}")
+            print(f"Backtranslated {i+1}/{len(texts)}: {text[:50]}... → {backtranslation[:50]}...")
             
         except Exception as e:
-            print(f"NLLB backtranslation failed for batch starting at index {batch_idx}: {str(e)}")
-            backtranslations.extend([""] * len(batch_texts))
+            print(f"NLLB backtranslation failed for text '{text}': {str(e)}")
+            backtranslations.append("")
             
-        # Clear GPU cache to prevent memory issues
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
+        # Add a small delay to prevent overwhelming the system
+        time.sleep(0.1)
     
     return backtranslations
 
-def calculate_similarity_batch(originals: List[str], backtranslateds: List[str], batch_size: int = 64) -> List[float]:
-    """Calculate cosine similarity between original and backtranslated texts in batches"""
+def calculate_similarity(original, backtranslated):
+    """Calculate cosine similarity between original and backtranslated text"""
     try:
+        if not original or not backtranslated:
+            return 0.0
+
+        clean_backtranslated = extract_text_from_brackets(backtranslated)
+        if not clean_backtranslated:
+            clean_backtranslated = backtranslated
+
         # Get similarity model from cache
         similarity_model = get_similarity_model()
         
-        # Preprocess texts
-        clean_backtranslateds = []
-        for bt in backtranslateds:
-            clean_bt = extract_text_from_brackets(bt)
-            if not clean_bt:
-                clean_bt = bt
-            clean_backtranslateds.append(clean_bt)
-        
-        # Calculate similarities in batches
-        similarities = []
-        for i in range(0, len(originals), batch_size):
-            batch_originals = originals[i:i+batch_size]
-            batch_backtranslateds = clean_backtranslateds[i:i+batch_size]
-            
-            # Filter out pairs where either text is empty
-            valid_indices = []
-            valid_originals = []
-            valid_backtranslateds = []
-            
-            for j, (orig, bt) in enumerate(zip(batch_originals, batch_backtranslateds)):
-                if orig and bt:
-                    valid_indices.append(j)
-                    valid_originals.append(orig)
-                    valid_backtranslateds.append(bt)
-            
-            if not valid_originals:
-                # All pairs in this batch are invalid
-                similarities.extend([0.0] * len(batch_originals))
-                continue
-            
-            # Encode texts
-            orig_embeddings = similarity_model.encode(valid_originals, convert_to_tensor=True)
-            bt_embeddings = similarity_model.encode(valid_backtranslateds, convert_to_tensor=True)
-            
-            # Calculate similarities
-            from sentence_transformers import util
-            batch_similarities = util.pytorch_cos_sim(orig_embeddings, bt_embeddings).diag().cpu().numpy()
-            
-            # Map similarities back to their original positions
-            batch_results = [0.0] * len(batch_originals)
-            for idx, sim in zip(valid_indices, batch_similarities):
-                batch_results[idx] = sim
-            
-            similarities.extend(batch_results)
-            
-            # Show progress
-            print(f"Calculated similarity for batch {i//batch_size + 1}/{(len(originals) + batch_size - 1) // batch_size}")
-        
-        return similarities
-        
+        from sentence_transformers import util
+        embeddings = similarity_model.encode([original, clean_backtranslated])
+        return util.pytorch_cos_sim(embeddings[0], embeddings[1]).item()
     except Exception as e:
-        print(f"Error calculating similarity in batch: {str(e)}")
-        return [0.0] * len(originals)
+        print(f"Error calculating similarity: {str(e)}")
+        return 0.0
 
 def process_dataframe(df, source_lang, target_lang):
     """Main processing function - full process"""
@@ -311,12 +244,15 @@ def process_dataframe(df, source_lang, target_lang):
 
     # Backtranslations using NLLB-3B
     print("Starting backtranslation with NLLB-3.3B...")
-    backtranslations = backtranslate_with_nllb_batch(result_df['translated'].tolist(), source_lang, target_lang)
+    backtranslations = backtranslate_with_nllb(result_df['translated'].tolist(), source_lang, target_lang)
     result_df['backtranslated'] = backtranslations
 
     # Calculate similarity
     print("Calculating similarity scores...")
-    result_df['similarity_score'] = calculate_similarity_batch(result_df['text'].tolist(), result_df['backtranslated'].tolist())
+    result_df['similarity_score'] = result_df.apply(
+        lambda row: calculate_similarity(row['text'], row['backtranslated']) if row['backtranslated'] else 0.0,
+        axis=1
+    )
 
     print("Translation process completed!")
     return result_df

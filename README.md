@@ -10,7 +10,7 @@ Our aim is simple: build a transparent, reproducible way to test zero-shot trans
 
 - [About the Project](#about-the-project)
 - [Current Results & Limitations](#current-results--limitations)
-- [Evaluated Models](#evaluated-models)
+- [Evaluated Languages and Models](#evaluated-languages-and-models)
 - [How to Contribute](#how-to-contribute)
 - [Technical Requirements](#technical-requirements)
 - [Evaluation Methodology](#evaluation-methodology)
@@ -36,7 +36,7 @@ The initial results in this repo were generated on a small, exploratory dataset:
 - ~14 different models evaluated
 
 
-**Limitations to note**:
+Limitations to note:
 
 - Results are anecdotal, not definitive benchmarks.
 - Many proprietary models weren’t tested.
@@ -46,9 +46,13 @@ Still, this early test provides a valuable starting point for deeper work.
 
 ------
 
-## Evaluated Models
+## Evaluated Languages and Models
 
-The following models were evaluated in the initial round of testing:
+The following languages were evaluated:
+
+Afrikaans, Akan, Amharic, Arabic, Bambara, Bemba, Berber, Central Atlas Tamazight, Chichewa, Congo Swahili, Dinka, Dyula, Ewe, Fon, Fulah, Ganda, Harari, Hausa, Herero, Igbo, Kabiyè, Kabuverdianu, Kabyle, Kamba, Kikuyu, Kimbundu, Kinyarwanda, Kongo, Kpelle, Kuanyama, Lingala, Luba-Katanga, Lushai, Mende, Mossi, Ndonga, Northern Sotho, Nuer, Oromo, Rundi, Sango, Shona, Sidamo, Somali, Southern Sotho, Susu, Swahili, Swati, Tachelhit, Tamasheq, Temne, Tigre, Tigrinya, Tonga, Tsonga, Tswana, Tumbuka, Umbundu, Vai, Venda, West Central Oromo, Wolof, Xhosa, Yoruba, Zulu
+
+The following models were evaluated:
 
 - [abacusai/dracarys-llama-3.1-70b-instruct](https://huggingface.co/abacusai/dracarys-llama-3.1-70b-instruct)
 - [ai21labs/jamba-1.5-large-instruct](https://huggingface.co/ai21labs/jamba-1.5-large-instruct)
@@ -71,9 +75,9 @@ The following models were evaluated in the initial round of testing:
 
 We’d love your help in expanding LLM Afro Leaderboard. Here’s how you can get involved:
 
-- **Focused testing**: Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.
-- **Broader sweeps**: If you have the compute, replicate the multi-language/multi-model setup and share your findings.
-- **Missing models**: Evaluate proprietary or under-tested models by creating new “recipes.”
+- Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.
+- If you have the compute, replicate the multi-language/multi-model setup and share your findings.
+- Evaluate proprietary or under-tested models by creating new “recipes.”
 
 Contributions of all sizes are welcome—from dataset prep, to code improvements, to sharing evaluation results.
 
@@ -99,12 +103,6 @@ We use a backtranslation + similarity check approach:
 3. Measure semantic similarity between the original and backtranslated English using MPNet embeddings.
 
 This yields a numeric score that captures how faithful the LLM’s translation was.
-
-------
-
-## License
-
-This project is released under the MIT License.
 
 ------
 

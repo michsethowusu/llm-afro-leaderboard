@@ -75,9 +75,9 @@ The following models were evaluated:
 
 We’d love your help in expanding LLM Afro Leaderboard. Here’s how you can get involved:
 
-- **Focused testing**: Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.
-- **Broader sweeps**: If you have the compute, replicate the multi-language/multi-model setup and share your findings.
-- **Missing models**: Evaluate proprietary or under-tested models by creating new “recipes.”
+- Run evaluations on larger or higher-quality datasets for one or a few languages. This is far easier (and often more insightful) than testing dozens at once.
+- If you have the compute, replicate the multi-language/multi-model setup and share your findings.
+- Evaluate proprietary or under-tested models by creating new “recipes.”
 
 Contributions of all sizes are welcome—from dataset prep, to code improvements, to sharing evaluation results.
 

@@ -10,6 +10,7 @@ Our aim is simple: build a transparent, reproducible way to test zero-shot trans
 
 - [About the Project](#about-the-project)
 - [Current Results & Limitations](#current-results--limitations)
+- [Evaluated Languages](#evaluated-languages)
 - [Evaluated Models](#evaluated-models)
 - [How to Contribute](#how-to-contribute)
 - [Technical Requirements](#technical-requirements)
@@ -46,7 +47,7 @@ Still, this early test provides a valuable starting point for deeper work.
 
 ------
 
-## Supported Languages
+## Evaluated Languages
 
 The following languages are evaluated in this project:
 

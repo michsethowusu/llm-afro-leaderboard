@@ -106,12 +106,6 @@ This yields a numeric score that captures how faithful the LLM’s translation w
 
 ------
 
-## License
-
-This project is released under the MIT License.
-
-------
-
 ## Acknowledgements
 
 Huge thanks to the open-source community and researchers powering this project, including:

@@ -36,7 +36,7 @@ The initial results in this repo were generated on a small, exploratory dataset:
 - ~14 different models evaluated
 
 
-**Limitations to note**:
+Limitations to note:
 
 - Results are anecdotal, not definitive benchmarks.
 - Many proprietary models weren’t tested.

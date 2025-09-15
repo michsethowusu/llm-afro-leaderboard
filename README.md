@@ -10,8 +10,7 @@ Our aim is simple: build a transparent, reproducible way to test zero-shot trans
 
 - [About the Project](#about-the-project)
 - [Current Results & Limitations](#current-results--limitations)
-- [Evaluated Languages](#evaluated-languages)
-- [Evaluated Models](#evaluated-models)
+- [Evaluated Languages and Models](#evaluated-languages-and-models)
 - [How to Contribute](#how-to-contribute)
 - [Technical Requirements](#technical-requirements)
 - [Evaluation Methodology](#evaluation-methodology)
@@ -47,17 +46,13 @@ Still, this early test provides a valuable starting point for deeper work.
 
 ------
 
-## Evaluated Languages
+## Evaluated Languages and Models
 
-The following languages are evaluated in this project:
+The following languages were evaluated:
 
 [Afrikaans](https://www.ethnologue.com/language/afr/), [Akan](https://www.ethnologue.com/language/aka/), [Amharic](https://www.ethnologue.com/language/amh/), [Arabic](https://www.ethnologue.com/language/ara/), [Bambara](https://www.ethnologue.com/language/bam/), [Bemba](https://www.ethnologue.com/language/bem/), [Berber](https://www.google.com/search?q=https://www.ethnologue.com/language/ber/), [Central Atlas Tamazight](https://www.ethnologue.com/language/tzm/), [Chichewa](https://www.ethnologue.com/language/nya/), [Congo Swahili](https://www.ethnologue.com/language/swc/), [Dinka](https://www.ethnologue.com/language/dik/), [Dyula](https://www.ethnologue.com/language/dyu/), [Ewe](https://www.ethnologue.com/language/ewe/), [Fon](https://www.ethnologue.com/language/fon/), [Fulah](https://www.ethnologue.com/language/ful/), [Ganda](https://www.ethnologue.com/language/lug/), [Harari](https://www.ethnologue.com/language/har/), [Hausa](https://www.ethnologue.com/language/hau/), [Herero](https://www.ethnologue.com/language/her/), [Igbo](https://www.ethnologue.com/language/ibo/), [Kabiyè](https://www.ethnologue.com/language/kbp/), [Kabuverdianu](https://www.ethnologue.com/language/kea/), [Kabyle](https://www.ethnologue.com/language/kab/), [Kamba](https://www.ethnologue.com/language/kam/), [Kikuyu](https://www.ethnologue.com/language/kik/), [Kimbundu](https://www.ethnologue.com/language/kmb/), [Kinyarwanda](https://www.ethnologue.com/language/kin/), [Kongo](https://www.ethnologue.com/language/kon/), [Kpelle](https://www.ethnologue.com/language/kpe/), [Kuanyama](https://www.ethnologue.com/language/kua/), [Lingala](https://www.ethnologue.com/language/lin/), [Luba-Katanga](https://www.ethnologue.com/language/lub/), [Lushai](https://www.ethnologue.com/language/lus/), [Mende](https://www.ethnologue.com/language/men/), [Mossi](https://www.ethnologue.com/language/mos/), [Ndonga](https://www.ethnologue.com/language/ndo/), [Northern Sotho](https://www.ethnologue.com/language/nso/), [Nuer](https://www.ethnologue.com/language/nus/), [Oromo](https://www.ethnologue.com/language/orm/), [Rundi](https://www.ethnologue.com/language/run/), [Sango](https://www.ethnologue.com/language/sag/), [Shona](https://www.ethnologue.com/language/sna/), [Sidamo](https://www.ethnologue.com/language/sid/), [Somali](https://www.ethnologue.com/language/som/), [Southern Sotho](https://www.ethnologue.com/language/sot/), [Susu](https://www.ethnologue.com/language/sus/), [Swahili](https://www.ethnologue.com/language/swa/), [Swati](https://www.ethnologue.com/language/ssw/), [Tachelhit](https://www.ethnologue.com/language/shi/), [Tamasheq](https://www.ethnologue.com/language/taq/), [Temne](https://www.ethnologue.com/language/tem/), [Tigre](https://www.ethnologue.com/language/tig/), [Tigrinya](https://www.ethnologue.com/language/tir/), [Tonga](https://www.ethnologue.com/language/toi/), [Tsonga](https://www.ethnologue.com/language/tso/), [Tswana](https://www.ethnologue.com/language/tsn/), [Tumbuka](https://www.ethnologue.com/language/tum/), [Umbundu](https://www.ethnologue.com/language/umb/), [Vai](https://www.ethnologue.com/language/vai/), [Venda](https://www.ethnologue.com/language/ven/), [West Central Oromo](https://www.ethnologue.com/language/gaz/), [Wolof](https://www.ethnologue.com/language/wol/), [Xhosa](https://www.ethnologue.com/language/xho/), [Yoruba](https://www.ethnologue.com/language/yor/), [Zulu](https://www.ethnologue.com/language/zul/)
 
-------
-
-## Evaluated Models
-
-The following models were evaluated in the initial round of testing:
+The following models were evaluated:
 
 - [abacusai/dracarys-llama-3.1-70b-instruct](https://huggingface.co/abacusai/dracarys-llama-3.1-70b-instruct)
 - [ai21labs/jamba-1.5-large-instruct](https://huggingface.co/ai21labs/jamba-1.5-large-instruct)

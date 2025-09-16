@@ -496,6 +496,15 @@ LANGUAGE_MAPPING = {
         "name": "Portuguese",
         "nllb_code": "por_Latn",
         "script": "Latn"
+    },
+    
+    # Additional languages from your list that were missing
+    "plt": {
+        "iso2": "plt",
+        "iso3": "plt",
+        "name": "Malagasy",
+        "nllb_code": "plt_Latn",
+        "script": "Latn"
     }
 }
 
@@ -549,4 +558,3 @@ def get_language_name(lang_code):
         return info["name"]
     else:
         return lang_code  # Return as-is if not found
-

@@ -6,4 +6,5 @@ openai
 transformers
 sentencepiece
 sacremoses
-
+plotly
+kaleido

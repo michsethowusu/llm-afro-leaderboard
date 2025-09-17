@@ -1,0 +1,95 @@
+{
+  "language_pair": "eng-xho",
+  "timestamp": "2025-09-17T06:26:49.052293",
+  "models": {
+    "nvidia_abacusai_dracarys_llama_3_1_70b_instruct": 69.44616297880809,
+    "nvidia_ai21labs_jamba_1_5_large_instruct": 69.44616297880809,
+    "nvidia_deepseek_ai_deepseek_r1_0528": 69.44616297880809,
+    "nvidia_deepseek_ai_deepseek_v3_1": 69.44616297880809,
+    "nvidia_google_gemma_2_27b_it": 69.44616297880809,
+    "nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": 69.44616297880809,
+    "nvidia_meta_llama_3_3_70b_instruct": 69.44616297880809,
+    "nvidia_moonshotai_kimi_k2_instruct": 69.44616297880809,
+    "nvidia_nvidia_llama_3_1_nemotron_70b_instruct": 69.44616297880809,
+    "nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": 69.44616297880809,
+    "nvidia_openai_gpt_oss_120b": 69.44616297880809,
+    "nvidia_qwen_qwen3_coder_480b_a35b_instruct": 69.44616297880809,
+    "nvidia_qwen_qwq_32b": 69.44616297880809,
+    "nvidia_writer_palmyra_creative_122b": 69.44616297880809
+  },
+  "average_score": 69.44616297880808,
+  "best_model": "nvidia_abacusai_dracarys_llama_3_1_70b_instruct",
+  "best_score": 69.44616297880809,
+  "source_breakdown": {
+    "nvidia_deepseek_ai_deepseek_r1_0528": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_ai21labs_jamba_1_5_large_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_meta_llama_3_3_70b_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_abacusai_dracarys_llama_3_1_70b_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_qwen_qwq_32b": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_google_gemma_2_27b_it": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_nvidia_llama_3_1_nemotron_70b_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_deepseek_ai_deepseek_v3_1": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_openai_gpt_oss_120b": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_moonshotai_kimi_k2_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_writer_palmyra_creative_122b": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_qwen_qwen3_coder_480b_a35b_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    },
+    "nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct": {
+      "academic": 61.51496171951294,
+      "literature": 67.52951681613922,
+      "news": 79.2940104007721
+    }
+  }
+}

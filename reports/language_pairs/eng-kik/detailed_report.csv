@@ -1,0 +1,15 @@
+Model,Similarity Score (%),Raw Score
+nvidia_abacusai_dracarys_llama_3_1_70b_instruct,80.92%,80.91759026050568
+nvidia_ai21labs_jamba_1_5_large_instruct,80.92%,80.91759026050568
+nvidia_deepseek_ai_deepseek_r1_0528,80.92%,80.91759026050568
+nvidia_deepseek_ai_deepseek_v3_1,80.92%,80.91759026050568
+nvidia_google_gemma_2_27b_it,80.92%,80.91759026050568
+nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct,80.92%,80.91759026050568
+nvidia_meta_llama_3_3_70b_instruct,80.92%,80.91759026050568
+nvidia_moonshotai_kimi_k2_instruct,80.92%,80.91759026050568
+nvidia_nvidia_llama_3_1_nemotron_70b_instruct,80.92%,80.91759026050568
+nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1,80.92%,80.91759026050568
+nvidia_openai_gpt_oss_120b,80.92%,80.91759026050568
+nvidia_qwen_qwen3_coder_480b_a35b_instruct,80.92%,80.91759026050568
+nvidia_qwen_qwq_32b,80.92%,80.91759026050568
+nvidia_writer_palmyra_creative_122b,80.92%,80.91759026050568

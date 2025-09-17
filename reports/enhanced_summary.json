@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-09-17T06:26:48.613814",
+  "dataset_overview": {
+    "total_records": 9660,
+    "language_pairs": 46,
+    "models": 14,
+    "average_score_overall": 56.97849358173857,
+    "score_std_overall": 31.097016378249503
+  },
+  "model_insights": {
+    "best_performer": {
+      "model": "nvidia_ai21labs_jamba_1_5_large_instruct",
+      "score": 57.01373549041581
+    },
+    "most_consistent": {
+      "model": "nvidia_openai_gpt_oss_120b",
+      "consistency": 68.88536433775916
+    },
+    "most_versatile": {
+      "model": "nvidia_ai21labs_jamba_1_5_large_instruct",
+      "versatility": 78.35813588269664
+    },
+    "leaders": [
+      "nvidia_deepseek_ai_deepseek_r1_0528",
+      "nvidia_abacusai_dracarys_llama_3_1_70b_instruct",
+      "nvidia_qwen_qwq_32b",
+      "nvidia_google_gemma_2_27b_it",
+      "nvidia_nvidia_llama_3_1_nemotron_70b_instruct",
+      "nvidia_deepseek_ai_deepseek_v3_1",
+      "nvidia_moonshotai_kimi_k2_instruct",
+      "nvidia_nvidia_llama_3_1_nemotron_ultra_253b_v1",
+      "nvidia_writer_palmyra_creative_122b",
+      "nvidia_qwen_qwen3_coder_480b_a35b_instruct",
+      "nvidia_gotocompany_gemma_2_9b_cpt_sahabatai_instruct"
+    ],
+    "performance_threshold": 56.98019007840059,
+    "consistency_threshold": 68.88497634798699
+  },
+  "language_insights": {
+    "best_performing_pair": {
+      "pair": "eng-afr",
+      "score": 97.28112975756328
+    },
+    "most_challenging_pair": {
+      "pair": "eng-fon",
+      "score": 18.618368282914158
+    },
+    "most_evaluated_pair": {
+      "pair": "eng-afr",
+      "evaluations": 210
+    }
+  }
+}

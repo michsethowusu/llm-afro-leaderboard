@@ -29,6 +29,8 @@ By building shared benchmarks, we can highlight both progress and gaps—ultimat
 
 ## Current Results & Limitations
 
+![](/home/owusus/Documents/GitHub/llm-afro-leaderboard/reports/language_performance_quadrant.png)
+
 The initial results in this repo were generated on a small, exploratory dataset:
 
 - ~15 paragraphs per language (from news, literature, and academic texts)

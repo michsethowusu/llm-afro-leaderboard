@@ -1,0 +1,24 @@
+TRANSLATION MODEL PERFORMANCE ANALYSIS
+==================================================
+
+Generated: 2025-09-17 06:26:48
+
+DATASET OVERVIEW
+--------------------
+Total Records: 9,660
+Language Pairs: 46
+Models Evaluated: 14
+Overall Average Score: 56.98%
+
+KEY FINDINGS
+--------------------
+🏆 Best Performer: ai21labs_jamba_1_5_large_instruct (57.01%)
+🎯 Most Consistent: openai_gpt_oss_120b (68.89%)
+🔄 Most Versatile: ai21labs_jamba_1_5_large_instruct (78.36%)
+👑 Market Leaders: deepseek_ai_deepseek_r1_0528, abacusai_dracarys_llama_3_1_70b_instruct, qwen_qwq_32b, google_gemma_2_27b_it, llama_3_1_nemotron_70b_instruct, deepseek_ai_deepseek_v3_1, moonshotai_kimi_k2_instruct, llama_3_1_nemotron_ultra_253b_v1, writer_palmyra_creative_122b, qwen_qwen3_coder_480b_a35b_instruct, gotocompany_gemma_2_9b_cpt_sahabatai_instruct
+
+LANGUAGE INSIGHTS
+--------------------
+🌟 Best Language Pair: eng-afr (97.28%)
+⚡ Most Challenging: eng-fon (18.62%)
+📊 Most Evaluated: eng-afr (210 evaluations)

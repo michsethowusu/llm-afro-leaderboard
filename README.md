@@ -50,9 +50,9 @@ Still, this early test provides a valuable starting point for deeper work.
 
 ## Evaluated Languages and Models
 
-The following languages were evaluated:
+The following 47 African languages were evaluated:
 
-Afrikaans, Akan, Amharic, Arabic, Bambara, Bemba, Berber, Central Atlas Tamazight, Chichewa, Congo Swahili, Dinka, Dyula, Ewe, Fon, Fulah, Ganda, Harari, Hausa, Herero, Igbo, Kabiyè, Kabuverdianu, Kabyle, Kamba, Kikuyu, Kimbundu, Kinyarwanda, Kongo, Kpelle, Kuanyama, Lingala, Luba-Katanga, Lushai, Mende, Mossi, Ndonga, Northern Sotho, Nuer, Oromo, Rundi, Sango, Shona, Sidamo, Somali, Southern Sotho, Susu, Swahili, Swati, Tachelhit, Tamasheq, Temne, Tigre, Tigrinya, Tonga, Tsonga, Tswana, Tumbuka, Umbundu, Vai, Venda, West Central Oromo, Wolof, Xhosa, Yoruba, Zulu
+Afrikaans (afr), Akan (aka), Amharic (amh), Bambara (bam), Bemba (bem), Dinka (dik), Dyula (dyu), Ewe (ewe), Fon (fon), Fulah (ful), Hausa (hau), Igbo (ibo), Kabiyè (kbp), Kamba (kam), Kikuyu (kik), Kimbundu (kmb), Kinyarwanda (kin), Kongo (kon), Lingala (lin), Ganda (lug), Northern Sotho (nso), Nuer (nus), Chichewa (nya), Kabuverdianu (kea), Oromo (orm), Rundi (run), Sango (sag), Shona (sna), Somali (som), Swati (ssw), Swahili (swa), Tigrinya (tir), Tswana (tsn), Tsonga (tso), Tumbuka (tum), Twi (twi), Umbundu (umb), Wolof (wol), Xhosa (xho), Yoruba (yor), Kabyle (kab), Lushai (lus), Malagasy (plt), Mossi (mos), Tamasheq (taq), Central Atlas Tamazight (tzm), Zulu (zul)
 
 The following models were evaluated:
 

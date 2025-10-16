@@ -52,7 +52,7 @@ Still, this early test provides a valuable starting point for deeper work.
 
 The following 47 African languages were evaluated:
 
-Afrikaans (afr), Akan (aka), Amharic (amh), Bambara (bam), Bemba (bem), Dinka (dik), Dyula (dyu), Ewe (ewe), Fon (fon), Fulah (ful), Hausa (hau), Igbo (ibo), Kabiyè (kbp), Kamba (kam), Kikuyu (kik), Kimbundu (kmb), Kinyarwanda (kin), Kongo (kon), Lingala (lin), Ganda (lug), Northern Sotho (nso), Nuer (nus), Chichewa (nya), Kabuverdianu (kea), Oromo (orm), Rundi (run), Sango (sag), Shona (sna), Somali (som), Swati (ssw), Swahili (swa), Tigrinya (tir), Tswana (tsn), Tsonga (tso), Tumbuka (tum), Twi (twi), Umbundu (umb), Wolof (wol), Xhosa (xho), Yoruba (yor), Kabyle (kab), Lushai (lus), Malagasy (plt), Mossi (mos), Tamasheq (taq), Central Atlas Tamazight (tzm), Zulu (zul)
+Afrikaans (afr), Akan (aka), Amharic (amh), Bambara (bam), Bemba (bem), Dinka (dik), Dyula (dyu), Ewe (ewe), Fon (fon), Fulah (ful), Hausa (hau), Igbo (ibo), Kabiyè (kbp), Kamba (kam), Kikuyu (kik), Kimbundu (kmb), Kinyarwanda (kin), Kongo (kon), Lingala (lin), Ganda (lug), Northern Sotho (nso), Nuer (nus), Chichewa (nya), Kabuverdianu (kea), Oromo (orm), Rundi (run), Sango (sag), Shona (sna), Somali (som), Swati (ssw), Swahili (swa), Tigrinya (tir), Tswana (tsn), Tsonga (tso), Tumbuka (tum), Twi (twi), Umbundu (umb), Wolof (wol), Xhosa (xho), Yoruba (yor), Kabyle (kab), Lushai (lus), Plateau Malagasy (plt), Mossi (mos), Tamasheq (taq), Central Atlas Tamazight (tzm), Zulu (zul)
 
 The following models were evaluated:
 
